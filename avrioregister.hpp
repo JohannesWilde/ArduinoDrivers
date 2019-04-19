@@ -2,7 +2,7 @@
 #define AVRIOREGISTER_HPP
 
 #include <stdint.h>
-#include <avrinputoutput.hpp>
+#include "avrinputoutput.hpp"
 #include "avrinternalregister.hpp"
 
 // template "methods" to check whether provided types are equal
