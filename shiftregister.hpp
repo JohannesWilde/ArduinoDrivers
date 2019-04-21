@@ -72,15 +72,10 @@ public:
     {
         if ( lengthInBits_ > 0 )
         {
-            // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
-            // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
-            uint8_t const curByteNumber = ( (lengthInBits_ - 1) >> 3 ); // = divide by 8 [integer!]
-            // Now find out, how many of the bits in the most significant byte will be used.
-            // (length - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
-            // because 0x01 has a bit at the first position alreade, subtract 1.
-            uint8_t curBitMask = static_cast<uint8_t>(0x01 << (lengthInBits_ - ( curByteNumber << 3 ) - 1));
+            uint8_t const * bitStreamArrayByte;
+            uint8_t curBitMask;
+            pointerAndBitmaskAtBitoffset(bitStreamArray, lengthInBits_, &bitStreamArrayByte, &curBitMask);
 
-            uint8_t const * bitStreamArrayByte = bitStreamArray + curByteNumber; // move pointer to most significant byte
             while (bitStreamArrayByte >= bitStreamArray)
             {
                 // Because above calculation causes the last bit to be bit 0 [LSB] of Byte 0 [LSBy], I don't have
@@ -117,15 +112,10 @@ public:
 
         if ( lengthInBits_ > 0 )
         {
-            // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
-            // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
-            uint8_t const curByteNumber = ( (lengthInBits_ - 1) >> 3 ); // = divide by 8 [integer!]
-            // Now find out, how many of the bits in the most significant byte will be used.
-            // (length - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
-            // because 0x01 has a bit at the first position alreade, subtract 1.
-            uint8_t curBitMask = static_cast<uint8_t>(0x01 << (lengthInBits_ - ( curByteNumber << 3 ) - 1));
+            uint8_t * bitStreamArrayByte;
+            uint8_t curBitMask;
+            pointerAndBitmaskAtBitoffset(bitStreamArray, lengthInBits_, &bitStreamArrayByte, &curBitMask);
 
-            uint8_t * bitStreamArrayByte = bitStreamArray + curByteNumber; // move pointer to most significant byte
             while (bitStreamArrayByte >= bitStreamArray)
             {
                 // Because above calculation causes the last bit to be bit 0 [LSB] of Byte 0 [LSBy], I don't have
@@ -157,16 +147,12 @@ public:
     {
         if ( lengthInBits_ > 0 )
         {
-            // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
-            // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
-            uint8_t const curByteNumber = ( (lengthInBits_ - 1) >> 3 ); // = divide by 8 [integer!]
-            // Now find out, how many of the bits in the most significant byte will be used.
-            // (length - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
-            // because 0x01 has a bit at the first position alreade, subtract 1.
-            uint8_t curBitMask = static_cast<uint8_t>(0x01 << (lengthInBits_ - ( curByteNumber << 3 ) - 1));
+            uint8_t const * bitStreamArrayInByte;
+            uint8_t * bitStreamArrayOutByte;
+            uint8_t curBitMask;
+            pointerAndBitmaskAtBitoffset(bitStreamArrayIn, lengthInBits_, &bitStreamArrayInByte, &curBitMask);
+            pointerAndBitmaskAtBitoffset(bitStreamArrayOut, lengthInBits_, &bitStreamArrayOutByte, &curBitMask);
 
-            uint8_t const * bitStreamArrayInByte = bitStreamArrayIn + curByteNumber; // move pointer to most significant byte
-            uint8_t * bitStreamArrayOutByte = bitStreamArrayOut + curByteNumber; // move pointer to most significant byte
             while (bitStreamArrayInByte >= bitStreamArrayIn)
             {
                 // Because above calculation causes the last bit to be bit 0 [LSB] of Byte 0 [LSBy], I don't have
@@ -202,15 +188,10 @@ public:
     {
         if ( lengthInBits_ > 0 )
         {
-            // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
-            // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
-            uint8_t const curByteNumber = ( (lengthInBits_ - 1) >> 3 ); // = divide by 8 [integer!]
-            // Now find out, how many of the bits in the most significant byte will be used.
-            // (length - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
-            // because 0x01 has a bit at the first position alreade, subtract 1.
-            uint8_t curBitMask = static_cast<uint8_t>(0x01 << (lengthInBits_ - ( curByteNumber << 3 ) - 1));
+            uint8_t * bitStreamArrayByte;
+            uint8_t curBitMask;
+            pointerAndBitmaskAtBitoffset(bitStreamArray, lengthInBits_, &bitStreamArrayByte, &curBitMask);
 
-            uint8_t * bitStreamArrayByte = bitStreamArray + curByteNumber; // move pointer to most significant byte
             while (bitStreamArrayByte >= bitStreamArray)
             {
                 // Because above calculation causes the last bit to be bit 0 [LSB] of Byte 0 [LSBy], I don't have
@@ -237,6 +218,33 @@ public:
         }
         // finally set serialInput to low
         SerialInput_::clearPort();
+    }
+
+    // the following methods are no templates, as currently only supported for 1-byte [8-bit] arrays
+    static void pointerAndBitmaskAtBitoffset(uint8_t * const referencePointer, unsigned const bitOffset, uint8_t * * const offsetPointer , uint8_t * const bitMask)
+    {
+        // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
+        // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
+        unsigned const curByteNumber = ( (bitOffset - 1) / 8 );
+        // Now find out, how many of the bits in the most significant byte will be used.
+        // (bitOffset - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
+        // because 0x01 has a bit at the first position alreade, subtract 1.
+        *bitMask = static_cast<uint8_t>(0x01 << (bitOffset - ( curByteNumber * 8 ) - 1));
+
+        *offsetPointer = referencePointer + curByteNumber; // move pointer to most significant byte
+    }
+
+    static void pointerAndBitmaskAtBitoffset(uint8_t const * const referencePointer, unsigned const bitOffset, uint8_t const * * const offsetPointer , uint8_t * const bitMask)
+    {
+        // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
+        // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
+        unsigned const curByteNumber = ( (bitOffset - 1) / 8 );
+        // Now find out, how many of the bits in the most significant byte will be used.
+        // (bitOffset - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
+        // because 0x01 has a bit at the first position alreade, subtract 1.
+        *bitMask = static_cast<uint8_t>(0x01 << (bitOffset - ( curByteNumber * 8 ) - 1));
+
+        *offsetPointer = referencePointer + curByteNumber; // move pointer to most significant byte
     }
 };
 
