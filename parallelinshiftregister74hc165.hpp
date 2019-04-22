@@ -16,6 +16,8 @@ template<unsigned const length_, typename InvertedParallelLoad_, typename ShiftR
 struct ParallelInShiftRegister74HC165 : public ShiftRegister<length_, SerialInput_, ShiftRegisterClock_, SerialOutput_>
 {
 protected:
+    // define this type only for internal convenience acces to the base-class things of this class.
+    // This is primarily usefull, when overwriting a method of the base-class in this class and wanting to call the base-class implementation.
     typedef ShiftRegister<length_, SerialInput_, ShiftRegisterClock_, SerialOutput_> ShiftRegister_;
 public:
     typedef InvertedParallelLoad_ InvertedParallelLoad;
