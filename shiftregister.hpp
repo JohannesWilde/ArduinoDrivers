@@ -74,7 +74,7 @@ public:
         {
             uint8_t const * bitStreamArrayByte;
             uint8_t curBitMask;
-            pointerAndBitmaskAtBitoffset(bitStreamArray, lengthInBits_, &bitStreamArrayByte, &curBitMask);
+            pointerAndBitmaskAtBitoffset<lengthInBits_>(bitStreamArray, &bitStreamArrayByte, &curBitMask);
 
             while (bitStreamArrayByte >= bitStreamArray)
             {
@@ -114,7 +114,7 @@ public:
         {
             uint8_t * bitStreamArrayByte;
             uint8_t curBitMask;
-            pointerAndBitmaskAtBitoffset(bitStreamArray, lengthInBits_, &bitStreamArrayByte, &curBitMask);
+            pointerAndBitmaskAtBitoffset<lengthInBits_>(bitStreamArray, &bitStreamArrayByte, &curBitMask);
 
             while (bitStreamArrayByte >= bitStreamArray)
             {
@@ -150,8 +150,8 @@ public:
             uint8_t const * bitStreamArrayInByte;
             uint8_t * bitStreamArrayOutByte;
             uint8_t curBitMask;
-            pointerAndBitmaskAtBitoffset(bitStreamArrayIn, lengthInBits_, &bitStreamArrayInByte, &curBitMask);
-            pointerAndBitmaskAtBitoffset(bitStreamArrayOut, lengthInBits_, &bitStreamArrayOutByte, &curBitMask);
+            pointerAndBitmaskAtBitoffset<lengthInBits_>(bitStreamArrayIn, &bitStreamArrayInByte, &curBitMask);
+            pointerAndBitmaskAtBitoffset<lengthInBits_>(bitStreamArrayOut, &bitStreamArrayOutByte, &curBitMask);
 
             while (bitStreamArrayInByte >= bitStreamArrayIn)
             {
@@ -190,7 +190,7 @@ public:
         {
             uint8_t * bitStreamArrayByte;
             uint8_t curBitMask;
-            pointerAndBitmaskAtBitoffset(bitStreamArray, lengthInBits_, &bitStreamArrayByte, &curBitMask);
+            pointerAndBitmaskAtBitoffset<lengthInBits_>(bitStreamArray, &bitStreamArrayByte, &curBitMask);
 
             while (bitStreamArrayByte >= bitStreamArray)
             {
@@ -221,7 +221,8 @@ public:
     }
 
     // the following methods are no templates, as currently only supported for 1-byte [8-bit] arrays
-    static void pointerAndBitmaskAtBitoffset(uint8_t * const referencePointer, unsigned const bitOffset, uint8_t * * const offsetPointer , uint8_t * const bitMask)
+    template<unsigned bitOffset>
+    static void pointerAndBitmaskAtBitoffset(uint8_t * const referencePointer, uint8_t * * const offsetPointer , uint8_t * const bitMask)
     {
         // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
         // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
@@ -233,8 +234,8 @@ public:
 
         *offsetPointer = referencePointer + curByteNumber; // move pointer to most significant byte
     }
-
-    static void pointerAndBitmaskAtBitoffset(uint8_t const * const referencePointer, unsigned const bitOffset, uint8_t const * * const offsetPointer , uint8_t * const bitMask)
+    template<unsigned bitOffset>
+    static void pointerAndBitmaskAtBitoffset(uint8_t const * const referencePointer, uint8_t const * * const offsetPointer , uint8_t * const bitMask)
     {
         // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
         // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
