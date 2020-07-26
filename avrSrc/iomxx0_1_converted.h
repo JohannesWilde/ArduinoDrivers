@@ -56,7 +56,10 @@
 
 /* Registers and associated bit numbers */
 
-#define PINA    _SFR_IO8(0X00)
+#define PINA_REGISTER 0X00
+#define PINA_TYPE uint8_t
+#define PINA_ACCESS _SFR_IO8
+#define PINA PINA_ACCESS(PINA_REGISTER)
 #define PINA7   7
 #define PINA6   6
 #define PINA5   5
@@ -66,7 +69,10 @@
 #define PINA1   1
 #define PINA0   0
 
-#define DDRA    _SFR_IO8(0X01)
+#define DDRA_REGISTER 0X01
+#define DDRA_TYPE uint8_t
+#define DDRA_ACCESS _SFR_IO8
+#define DDRA DDRA_ACCESS(DDRA_REGISTER)
 #define DDA7    7
 #define DDA6    6
 #define DDA5    5
@@ -76,7 +82,10 @@
 #define DDA1    1
 #define DDA0    0
 
-#define PORTA   _SFR_IO8(0X02)
+#define PORTA_REGISTER 0X02
+#define PORTA_TYPE uint8_t
+#define PORTA_ACCESS _SFR_IO8
+#define PORTA PORTA_ACCESS(PORTA_REGISTER)
 #define PA7     7
 #define PA6     6
 #define PA5     5
@@ -86,7 +95,10 @@
 #define PA1     1
 #define PA0     0
 
-#define PINB    _SFR_IO8(0X03)
+#define PINB_REGISTER 0X03
+#define PINB_TYPE uint8_t
+#define PINB_ACCESS _SFR_IO8
+#define PINB PINB_ACCESS(PINB_REGISTER)
 #define PINB7   7
 #define PINB6   6
 #define PINB5   5
@@ -419,7 +431,10 @@
 #define EEPE    1
 #define EERE    0
 
-#define EEDR    _SFR_IO8(0X20)
+#define EEDR_REGISTER 0X20
+#define EEDR_TYPE uint8_t
+#define EEDR_ACCESS _SFR_IO8
+#define EEDR EEDR_ACCESS(EEDR_REGISTER)
 
 /* Combine EEARL and EEARH */
 #define EEAR_REGISTER 0x21
@@ -431,7 +446,10 @@
 #define EEARL_TYPE uint8_t
 #define EEARL_ACCESS _SFR_IO8
 #define EEARL EEARL_ACCESS(EEARL_REGISTER)
-#define EEARH   _SFR_IO8(0X22)
+#define EEARH_REGISTER 0X22
+#define EEARH_TYPE uint8_t
+#define EEARH_ACCESS _SFR_IO8
+#define EEARH EEARH_ACCESS(EEARH_REGISTER)
 
 /* 6-char sequence denoting where to find the EEPROM registers in memory space.
    Adresses denoted in hex syntax with uppercase letters. Used by the EEPROM
@@ -471,11 +489,20 @@
 #define CS01    1
 #define CS00    0
 
-#define TCNT0   _SFR_IO8(0X26)
+#define TCNT0_REGISTER 0X26
+#define TCNT0_TYPE uint8_t
+#define TCNT0_ACCESS _SFR_IO8
+#define TCNT0 TCNT0_ACCESS(TCNT0_REGISTER)
 
-#define OCR0A   _SFR_IO8(0X27)
+#define OCR0A_REGISTER 0X27
+#define OCR0A_TYPE uint8_t
+#define OCR0A_ACCESS _SFR_IO8
+#define OCR0A OCR0A_ACCESS(OCR0A_REGISTER)
 
-#define OCR0B   _SFR_IO8(0X28)
+#define OCR0B_REGISTER 0X28
+#define OCR0B_TYPE uint8_t
+#define OCR0B_ACCESS _SFR_IO8
+#define OCR0B OCR0B_ACCESS(OCR0B_REGISTER)
 
 /* Reserved [0x29] */
 
@@ -510,7 +537,10 @@
 #define WCOL    6
 #define SPI2X   0
 
-#define SPDR    _SFR_IO8(0X2E)
+#define SPDR_REGISTER 0X2E
+#define SPDR_TYPE uint8_t
+#define SPDR_ACCESS _SFR_IO8
+#define SPDR SPDR_ACCESS(SPDR_REGISTER)
 
 /* Reserved [0x2F] */
 
@@ -566,7 +596,10 @@
 #define EXTRF   1
 #define PORF    0
 
-#define MCUCR   _SFR_IO8(0X35)
+#define MCUCR_REGISTER 0X35
+#define MCUCR_TYPE uint8_t
+#define MCUCR_ACCESS _SFR_IO8
+#define MCUCR MCUCR_ACCESS(MCUCR_REGISTER)
 #define JTD     7
 #define PUD     4
 #define IVSEL   1
@@ -589,10 +622,16 @@
 
 /* Reserved [0x38..0x3A] */
 
-#define RAMPZ   _SFR_IO8(0X3B)
+#define RAMPZ_REGISTER 0X3B
+#define RAMPZ_TYPE uint8_t
+#define RAMPZ_ACCESS _SFR_IO8
+#define RAMPZ RAMPZ_ACCESS(RAMPZ_REGISTER)
 #define RAMPZ0  0
 
-#define EIND    _SFR_IO8(0X3C)
+#define EIND_REGISTER 0X3C
+#define EIND_TYPE uint8_t
+#define EIND_ACCESS _SFR_IO8
+#define EIND EIND_ACCESS(EIND_REGISTER)
 #define EIND0   0
 
 /* SP [0x3D..0x3E] */
@@ -1378,7 +1417,10 @@
 #define U2X0    1
 #define MPCM0   0
 
-#define UCSR0B  _SFR_MEM8(0XC1)
+#define UCSR0B_REGISTER 0XC1
+#define UCSR0B_TYPE uint8_t
+#define UCSR0B_ACCESS _SFR_MEM8
+#define UCSR0B UCSR0B_ACCESS(UCSR0B_REGISTER)
 #define RXCIE0  7
 #define TXCIE0  6
 #define UDRIE0  5
@@ -1418,7 +1460,10 @@
 #define UBRR0H_ACCESS _SFR_MEM8
 #define UBRR0H UBRR0H_ACCESS(UBRR0H_REGISTER)
 
-#define UDR0    _SFR_MEM8(0XC6)
+#define UDR0_REGISTER 0XC6
+#define UDR0_TYPE uint8_t
+#define UDR0_ACCESS _SFR_MEM8
+#define UDR0 UDR0_ACCESS(UDR0_REGISTER)
 
 /* Reserved [0xC7] */
 
@@ -1435,7 +1480,10 @@
 #define U2X1    1
 #define MPCM1   0
 
-#define UCSR1B  _SFR_MEM8(0XC9)
+#define UCSR1B_REGISTER 0XC9
+#define UCSR1B_TYPE uint8_t
+#define UCSR1B_ACCESS _SFR_MEM8
+#define UCSR1B UCSR1B_ACCESS(UCSR1B_REGISTER)
 #define RXCIE1  7
 #define TXCIE1  6
 #define UDRIE1  5
@@ -1475,7 +1523,10 @@
 #define UBRR1H_ACCESS _SFR_MEM8
 #define UBRR1H UBRR1H_ACCESS(UBRR1H_REGISTER)
 
-#define UDR1    _SFR_MEM8(0XCE)
+#define UDR1_REGISTER 0XCE
+#define UDR1_TYPE uint8_t
+#define UDR1_ACCESS _SFR_MEM8
+#define UDR1 UDR1_ACCESS(UDR1_REGISTER)
 
 /* Reserved [0xCF] */
 
