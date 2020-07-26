@@ -772,7 +772,10 @@
 #define PCINT8  0
 
 #if defined(__ATmegaxx0__) 
-# define PCMSK2 _SFR_MEM8(0x6D)
+#define PCMSK2_REGISTER 0x6D
+#define PCMSK2_TYPE uint8_t
+#define PCMSK2_ACCESS _SFR_MEM8
+#define PCMSK2 PCMSK2_ACCESS(PCMSK2_REGISTER)
 # define PCINT23 7
 # define PCINT22 6
 # define PCINT21 5
@@ -1532,7 +1535,10 @@
 
 #if defined(__ATmegaxx0__)
 
-# define UCSR2A _SFR_MEM8(0xD0)
+#define UCSR2A_REGISTER 0xD0
+#define UCSR2A_TYPE uint8_t
+#define UCSR2A_ACCESS _SFR_MEM8
+#define UCSR2A UCSR2A_ACCESS(UCSR2A_REGISTER)
 # define RXC2   7
 # define TXC2   6
 # define UDRE2  5
@@ -1542,7 +1548,10 @@
 # define U2X2   1
 # define MPCM2  0
 
-# define UCSR2B _SFR_MEM8(0XD1)
+#define UCSR2B_REGISTER 0XD1
+#define UCSR2B_TYPE uint8_t
+#define UCSR2B_ACCESS _SFR_MEM8
+#define UCSR2B UCSR2B_ACCESS(UCSR2B_REGISTER)
 # define RXCIE2 7
 # define TXCIE2 6
 # define UDRIE2 5
@@ -1552,7 +1561,10 @@
 # define RXB82  1
 # define TXB82  0
 
-# define UCSR2C _SFR_MEM8(0xD2)
+#define UCSR2C_REGISTER 0xD2
+#define UCSR2C_TYPE uint8_t
+#define UCSR2C_ACCESS _SFR_MEM8
+#define UCSR2C UCSR2C_ACCESS(UCSR2C_REGISTER)
 # define UMSEL21 7
 # define UMSEL20 6
 # define UPM21  5
@@ -1565,12 +1577,24 @@
 /* Reserved [0xD3] */
 
 /* Combine UBRR2L and UBRR2H */
-# define UBRR2  _SFR_MEM16(0xD4)
+#define UBRR2_REGISTER 0xD4
+#define UBRR2_TYPE uint16_t
+#define UBRR2_ACCESS _SFR_MEM16
+#define UBRR2 UBRR2_ACCESS(UBRR2_REGISTER)
 
-# define UBRR2L _SFR_MEM8(0xD4)
-# define UBRR2H _SFR_MEM8(0xD5)
+#define UBRR2L_REGISTER 0xD4
+#define UBRR2L_TYPE uint8_t
+#define UBRR2L_ACCESS _SFR_MEM8
+#define UBRR2L UBRR2L_ACCESS(UBRR2L_REGISTER)
+#define UBRR2H_REGISTER 0xD5
+#define UBRR2H_TYPE uint8_t
+#define UBRR2H_ACCESS _SFR_MEM8
+#define UBRR2H UBRR2H_ACCESS(UBRR2H_REGISTER)
 
-# define UDR2   _SFR_MEM8(0XD6)
+#define UDR2_REGISTER 0XD6
+#define UDR2_TYPE uint8_t
+#define UDR2_ACCESS _SFR_MEM8
+#define UDR2 UDR2_ACCESS(UDR2_REGISTER)
 
 #endif /* __ATmegaxx0__ */
 
@@ -1578,7 +1602,10 @@
 
 #if defined(__ATmegaxx0__)
 
-# define PINH   _SFR_MEM8(0x100)
+#define PINH_REGISTER 0x100
+#define PINH_TYPE uint8_t
+#define PINH_ACCESS _SFR_MEM8
+#define PINH PINH_ACCESS(PINH_REGISTER)
 # define PINH7  7
 # define PINH6  6
 # define PINH5  5
@@ -1588,7 +1615,10 @@
 # define PINH1  1
 # define PINH0  0
 
-# define DDRH   _SFR_MEM8(0x101)
+#define DDRH_REGISTER 0x101
+#define DDRH_TYPE uint8_t
+#define DDRH_ACCESS _SFR_MEM8
+#define DDRH DDRH_ACCESS(DDRH_REGISTER)
 # define DDH7   7
 # define DDH6   6
 # define DDH5   5
@@ -1598,7 +1628,10 @@
 # define DDH1   1
 # define DDH0   0
 
-# define PORTH  _SFR_MEM8(0x102)
+#define PORTH_REGISTER 0x102
+#define PORTH_TYPE uint8_t
+#define PORTH_ACCESS _SFR_MEM8
+#define PORTH PORTH_ACCESS(PORTH_REGISTER)
 # define PH7    7
 # define PH6    6
 # define PH5    5
@@ -1608,7 +1641,10 @@
 # define PH1    1
 # define PH0    0
 
-# define PINJ   _SFR_MEM8(0x103)
+#define PINJ_REGISTER 0x103
+#define PINJ_TYPE uint8_t
+#define PINJ_ACCESS _SFR_MEM8
+#define PINJ PINJ_ACCESS(PINJ_REGISTER)
 # define PINJ7  7
 # define PINJ6  6
 # define PINJ5  5
@@ -1618,7 +1654,10 @@
 # define PINJ1  1
 # define PINJ0  0
 
-# define DDRJ   _SFR_MEM8(0x104)
+#define DDRJ_REGISTER 0x104
+#define DDRJ_TYPE uint8_t
+#define DDRJ_ACCESS _SFR_MEM8
+#define DDRJ DDRJ_ACCESS(DDRJ_REGISTER)
 # define DDJ7   7
 # define DDJ6   6
 # define DDJ5   5
@@ -1628,7 +1667,10 @@
 # define DDJ1   1
 # define DDJ0   0
 
-# define PORTJ  _SFR_MEM8(0x105)
+#define PORTJ_REGISTER 0x105
+#define PORTJ_TYPE uint8_t
+#define PORTJ_ACCESS _SFR_MEM8
+#define PORTJ PORTJ_ACCESS(PORTJ_REGISTER)
 # define PJ7 7
 # define PJ6 6
 # define PJ5 5
@@ -1638,7 +1680,10 @@
 # define PJ1 1
 # define PJ0 0
 
-# define PINK   _SFR_MEM8(0x106)
+#define PINK_REGISTER 0x106
+#define PINK_TYPE uint8_t
+#define PINK_ACCESS _SFR_MEM8
+#define PINK PINK_ACCESS(PINK_REGISTER)
 # define PINK7  7
 # define PINK6  6
 # define PINK5  5
@@ -1648,7 +1693,10 @@
 # define PINK1  1
 # define PINK0  0
 
-# define DDRK   _SFR_MEM8(0x107)
+#define DDRK_REGISTER 0x107
+#define DDRK_TYPE uint8_t
+#define DDRK_ACCESS _SFR_MEM8
+#define DDRK DDRK_ACCESS(DDRK_REGISTER)
 # define DDK7   7
 # define DDK6   6
 # define DDK5   5
@@ -1658,7 +1706,10 @@
 # define DDK1   1
 # define DDK0   0
 
-# define PORTK  _SFR_MEM8(0x108)
+#define PORTK_REGISTER 0x108
+#define PORTK_TYPE uint8_t
+#define PORTK_ACCESS _SFR_MEM8
+#define PORTK PORTK_ACCESS(PORTK_REGISTER)
 # define PK7 7
 # define PK6 6
 # define PK5 5
@@ -1668,7 +1719,10 @@
 # define PK1 1
 # define PK0 0
 
-# define PINL   _SFR_MEM8(0x109)
+#define PINL_REGISTER 0x109
+#define PINL_TYPE uint8_t
+#define PINL_ACCESS _SFR_MEM8
+#define PINL PINL_ACCESS(PINL_REGISTER)
 # define PINL7  7
 # define PINL6  6
 # define PINL5  5
@@ -1678,7 +1732,10 @@
 # define PINL1  1
 # define PINL0  0
 
-# define DDRL   _SFR_MEM8(0x10A)
+#define DDRL_REGISTER 0x10A
+#define DDRL_TYPE uint8_t
+#define DDRL_ACCESS _SFR_MEM8
+#define DDRL DDRL_ACCESS(DDRL_REGISTER)
 # define DDL7   7
 # define DDL6   6
 # define DDL5   5
@@ -1688,7 +1745,10 @@
 # define DDL1   1
 # define DDL0   0
 
-# define PORTL  _SFR_MEM8(0x10B)
+#define PORTL_REGISTER 0x10B
+#define PORTL_TYPE uint8_t
+#define PORTL_ACCESS _SFR_MEM8
+#define PORTL PORTL_ACCESS(PORTL_REGISTER)
 # define PL7 7
 # define PL6 6
 # define PL5 5
@@ -1816,7 +1876,10 @@
 
 #if defined(__ATmegaxx0__) 
 
-# define UCSR3A _SFR_MEM8(0x130)
+#define UCSR3A_REGISTER 0x130
+#define UCSR3A_TYPE uint8_t
+#define UCSR3A_ACCESS _SFR_MEM8
+#define UCSR3A UCSR3A_ACCESS(UCSR3A_REGISTER)
 # define RXC3   7
 # define TXC3   6
 # define UDRE3  5
@@ -1826,7 +1889,10 @@
 # define U2X3   1
 # define MPCM3  0
 
-# define UCSR3B _SFR_MEM8(0X131)
+#define UCSR3B_REGISTER 0X131
+#define UCSR3B_TYPE uint8_t
+#define UCSR3B_ACCESS _SFR_MEM8
+#define UCSR3B UCSR3B_ACCESS(UCSR3B_REGISTER)
 # define RXCIE3 7
 # define TXCIE3 6
 # define UDRIE3 5
@@ -1836,7 +1902,10 @@
 # define RXB83  1
 # define TXB83  0
 
-# define UCSR3C _SFR_MEM8(0x132)
+#define UCSR3C_REGISTER 0x132
+#define UCSR3C_TYPE uint8_t
+#define UCSR3C_ACCESS _SFR_MEM8
+#define UCSR3C UCSR3C_ACCESS(UCSR3C_REGISTER)
 # define UMSEL31 7
 # define UMSEL30 6
 # define UPM31  5
@@ -1849,12 +1918,24 @@
 /* Reserved [0x133] */
 
 /* Combine UBRR3L and UBRR3H */
-# define UBRR3  _SFR_MEM16(0x134)
+#define UBRR3_REGISTER 0x134
+#define UBRR3_TYPE uint16_t
+#define UBRR3_ACCESS _SFR_MEM16
+#define UBRR3 UBRR3_ACCESS(UBRR3_REGISTER)
 
-# define UBRR3L _SFR_MEM8(0x134)
-# define UBRR3H _SFR_MEM8(0x135)
+#define UBRR3L_REGISTER 0x134
+#define UBRR3L_TYPE uint8_t
+#define UBRR3L_ACCESS _SFR_MEM8
+#define UBRR3L UBRR3L_ACCESS(UBRR3L_REGISTER)
+#define UBRR3H_REGISTER 0x135
+#define UBRR3H_TYPE uint8_t
+#define UBRR3H_ACCESS _SFR_MEM8
+#define UBRR3H UBRR3H_ACCESS(UBRR3H_REGISTER)
 
-# define UDR3   _SFR_MEM8(0X136)
+#define UDR3_REGISTER 0X136
+#define UDR3_TYPE uint8_t
+#define UDR3_ACCESS _SFR_MEM8
+#define UDR3 UDR3_ACCESS(UDR3_REGISTER)
 
 #endif /* __ATmegaxx0__ */
 
