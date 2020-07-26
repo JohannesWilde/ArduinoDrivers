@@ -29,7 +29,7 @@
 struct ArduinoUno : Atmega328p
 {
 public:
-    // The individual Arduino Pins.
+    // The individual Arduino Uno Pins.
     typedef typename Atmega328p::D0 D0;
     typedef typename Atmega328p::D1 D1;
     typedef typename Atmega328p::D2 D2;
@@ -38,12 +38,14 @@ public:
     typedef typename Atmega328p::D5 D5;
     typedef typename Atmega328p::D6 D6;
     typedef typename Atmega328p::D7 D7;
+
     typedef typename Atmega328p::B0 D8;
     typedef typename Atmega328p::B1 D9;
     typedef typename Atmega328p::B2 D10;
     typedef typename Atmega328p::B3 D11;
     typedef typename Atmega328p::B4 D12;
     typedef typename Atmega328p::B5 D13;
+
     typedef typename Atmega328p::C0 A0;
     typedef typename Atmega328p::C1 A1;
     typedef typename Atmega328p::C2 A2;
@@ -52,7 +54,7 @@ public:
     typedef typename Atmega328p::C5 A5;
 
     // convenience names
-    typedef B5 LED_BUILTIN;
+    typedef D13 LED_BUILTIN;
 };
 
 #endif // ARDUINOUNO_H
