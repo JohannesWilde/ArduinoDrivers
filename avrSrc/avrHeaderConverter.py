@@ -1,6 +1,20 @@
 import re
 from os import path
 
+"""
+Additional to convenient register access via preprocessor defines,
+    "#define DDRB    _SFR_IO8(0x04)"
+provide the following separate information [additionally to the original content]:
+    "#define DDRB_REGISTER 0x04
+     #define DDRB_TYPE uint8_t
+     #define DDRB_ACCESS _SFR_IO8
+     #define DDRB DDRB_ACCESS(DDRB_REGISTER)"
+.
+This means that this script's output is fully backward compatible.
+
+For this to work, you will have to replace the original files for your compiler [e.g. in
+/usr/share/arduino/hardware/tools/avr/lib/avr/include/avr].
+"""
 
 if __name__ == "__main__":
     filepath = "./iom328p.h"
