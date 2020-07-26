@@ -1,8 +1,6 @@
 #ifndef AVRINPUTOUTPUT_HPP
 #define AVRINPUTOUTPUT_HPP
 
-#include <stdint.h>
-
 // This namespace holds the enums for convenient HW I/O access
 
 namespace AvrInputOutput
@@ -20,6 +18,6 @@ namespace AvrInputOutput
         LOW=0,
         HIGH=1
     };
-}
+} // namespace AvrInputOutput
 
 #endif // AVRINPUTOUTPUT_H
