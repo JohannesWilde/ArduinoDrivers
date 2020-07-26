@@ -52,7 +52,7 @@ protected:
     // if it is, this method returns HIGH, otherwise LOW.
     static typename AvrInputOutput::PinState checkPinState_(typename AvrIoRegister::RegisterType const registerValue)
     {
-        return ((registerValue & bitMask) != 0) ? AvrInputOutput::HIGH : AvrInputOutput::LOW;
+        return ((registerValue & bitMask) != 0) ? AvrInputOutput::High : AvrInputOutput::Low;
     }
 };
 

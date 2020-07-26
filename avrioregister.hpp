@@ -54,19 +54,19 @@ public:
     {
         switch (pinType)
         {
-        case AvrInputOutput::OUTPUT_HIGH:
+        case AvrInputOutput::OutputHigh:
             DdrRegister::setBitMask(bitMask);       // output
             PortRegister::setBitMask(bitMask);      // high
             break;
-        case AvrInputOutput::OUTPUT_LOW:
+        case AvrInputOutput::OutputLow:
             DdrRegister::setBitMask(bitMask);       // output
             PortRegister::clearBitMask(bitMask);    // low
             break;
-        case AvrInputOutput::INPUT:
+        case AvrInputOutput::Input:
             DdrRegister::clearBitMask(bitMask);     // input
             PortRegister::clearBitMask(bitMask);    // no pull-up
             break;
-        case AvrInputOutput::INPUT_PULLUP:
+        case AvrInputOutput::InputPullup:
             DdrRegister::clearBitMask(bitMask);     // input
             PortRegister::setBitMask(bitMask);      // pull-up [PUD in MCUCR needs to be low]
             // break;
