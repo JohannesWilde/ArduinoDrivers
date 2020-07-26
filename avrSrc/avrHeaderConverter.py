@@ -12,8 +12,13 @@ provide the following separate information [additionally to the original content
 .
 This means that this script's output is fully backward compatible.
 
-For this to work, you will have to replace the original files for your compiler [e.g. in
-/usr/share/arduino/hardware/tools/avr/lib/avr/include/avr].
+
+Copy the modified register definitions header to a subdirectory similar to the real sources [avr/...], as to let the
+include be replaced with this customized version even when including io.h.
+Please note, that in order for that to work, this submodule will have to be added to the CMake include directories first
+[include_directories(${PROJECT_SOURCE_DIR}/ArduinoDrivers)].
+
+Alternatively one can replace the original files [e.g. in /usr/share/arduino/hardware/tools/avr/lib/avr/include/avr].
 """
 
 if __name__ == "__main__":
