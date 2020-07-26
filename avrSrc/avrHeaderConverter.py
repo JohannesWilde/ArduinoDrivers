@@ -22,10 +22,16 @@ Alternatively one can replace the original files [e.g. in /usr/share/arduino/har
 """
 
 if __name__ == "__main__":
-    filepath = "./iom328p.h"
+    filepath = "./iomxx0_1.h"
 
     conversionMacros = ["_SFR_MEM", "_SFR_IO"]
-    regularExpressions = [re.compile("#define\s*(.*?)\s*({conversionMacro})(\d+)\\((0x[0-9A-Fa-f]+)\\)".format(**{"conversionMacro": macro}))
+    # * - 0 to n repetitions
+    # + - 1 to n repetitions
+    # \s - whitespace
+    # \d - decimal digit
+    # \(, \) - escaped braces
+    # \\ - escaped backslash for Python's format
+    regularExpressions = [re.compile("#\s*define\s*(.*?)\s*({conversionMacro})(\d+)\\((0(x|X)[0-9A-Fa-f]+)\\)".format(**{"conversionMacro": macro}))
                                                                                         for macro in conversionMacros]
     filenameParts = path.splitext(path.basename(filepath))
     outputFilename = "{filename}_converted{fileextension}".format(**{"filename": filenameParts[0], "fileextension": filenameParts[1]})
@@ -36,7 +42,4 @@ if __name__ == "__main__":
                                                  " \\2\\3\n#define \\1 \\1_ACCESS(\\1_REGISTER)", line)
             outputFile.write(line)
 
-
     exit(0)
-
-
