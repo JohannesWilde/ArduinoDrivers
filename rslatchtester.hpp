@@ -1,5 +1,5 @@
-#ifndef RSLATCHTESTER_HPP
-#define RSLATCHTESTER_HPP
+#ifndef TMP_RSLATCH_TESTER_HPP
+#define TMP_RSLATCH_TESTER_HPP
 
 #include "devicetester.hpp"
 #include "avrinputoutput.hpp"
@@ -321,4 +321,4 @@ public:
 
 };
 
-#endif // RSLATCHTESTER_HPP
+#endif // TMP_RSLATCH_TESTER_HPP

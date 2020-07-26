@@ -1,5 +1,5 @@
-#ifndef RSLATCHCD4043B_HPP
-#define RSLATCHCD4043B_HPP
+#ifndef TMP_RSLATCH_CD4043B_HPP
+#define TMP_RSLATCH_CD4043B_HPP
 
 #include <stdint.h>
 #include "avrinputoutput.hpp"
@@ -133,4 +133,4 @@ public:
     }
 };
 
-#endif // RSLATCHCD4043B_HPP
+#endif // TMP_RSLATCH_CD4043B_HPP

@@ -1,5 +1,5 @@
-#ifndef AVRPIN_HPP
-#define AVRPIN_HPP
+#ifndef TMP_AVRPIN_HPP
+#define TMP_AVRPIN_HPP
 
 #include <stdint.h>
 #include "avrinputoutput.hpp"
@@ -56,4 +56,4 @@ protected:
     }
 };
 
-#endif // AVRPIN_H
+#endif // TMP_AVRPIN_HPP

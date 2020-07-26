@@ -1,5 +1,5 @@
-#ifndef ATMEGA328P_HPP
-#define ATMEGA328P_HPP
+#ifndef TMP_ATMEGA328P_HPP
+#define TMP_ATMEGA328P_HPP
 
 // ATMEL ATMEGA328p
 //
@@ -70,4 +70,4 @@ public:
     typedef AvrPin<RegisterD, PORTD7> D7;
 };
 
-#endif // ATMEGA328P_HPP
+#endif // TMP_ATMEGA328P_HPP

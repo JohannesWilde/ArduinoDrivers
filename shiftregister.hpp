@@ -1,5 +1,5 @@
-#ifndef SHIFTREGISTER_HPP
-#define SHIFTREGISTER_HPP
+#ifndef TMP_SHIFT_REGISTER_HPP
+#define TMP_SHIFT_REGISTER_HPP
 
 #include <stdint.h>
 #include "avrinputoutput.hpp"
@@ -249,4 +249,4 @@ public:
     }
 };
 
-#endif // SHIFTREGISTER_HPP
+#endif // TMP_SHIFT_REGISTER_HPP

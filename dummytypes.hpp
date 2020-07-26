@@ -1,5 +1,5 @@
-#ifndef DUMMYTYPES_HPP
-#define DUMMYTYPES_HPP
+#ifndef TMP_DUMMY_TYPES_HPP
+#define TMP_DUMMY_TYPES_HPP
 
 #include "dummyavrinternalregister.hpp"
 #include "avrioregister.hpp"
@@ -22,4 +22,4 @@ typedef AvrPin<DummyAvrIoRegister1, 0> DummyAvrPin1;
 // this pin will always read HIGH [1]
 typedef AvrPin<DummyAvrIoRegister2, 0> DummyAvrPin2;
 
-#endif // DUMMYTYPES_HPP
+#endif // TMP_DUMMY_TYPES_HPP

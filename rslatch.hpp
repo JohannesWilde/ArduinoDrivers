@@ -1,5 +1,5 @@
-#ifndef RSLATCH_HPP
-#define RSLATCH_HPP
+#ifndef TMP_RSLATCH_HPP
+#define TMP_RSLATCH_HPP
 
 #include <stdint.h>
 #include "avrinputoutput.hpp"
@@ -59,4 +59,4 @@ public:
 
 };
 
-#endif // RSLATCH_HPP
+#endif // TMP_RSLATCH_HPP

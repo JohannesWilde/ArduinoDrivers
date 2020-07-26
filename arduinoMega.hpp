@@ -1,7 +1,7 @@
 // ATMEL ATMEGA328p
 
-#ifndef ARDUINO_MEGA_HPP
-#define ARDUINO_MEGA_HPP
+#ifndef TMP_ARDUINO_MEGA_HPP
+#define TMP_ARDUINO_MEGA_HPP
 
 #ifndef __AVR_ATmega2560__
 #warning "An Arduino Mega typically has an Atmega328p - currently something else is #defined."
@@ -115,4 +115,4 @@ public:
     typedef D13 LED_BUILTIN;
 };
 
-#endif // ARDUINO_MEGA_HPP
+#endif // TMP_ARDUINO_MEGA_HPP

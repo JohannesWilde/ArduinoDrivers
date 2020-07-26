@@ -1,5 +1,5 @@
-#ifndef AVRINPUTOUTPUT_HPP
-#define AVRINPUTOUTPUT_HPP
+#ifndef TMP_AVR_INPUT_OUTPUT_HPP
+#define TMP_AVR_INPUT_OUTPUT_HPP
 
 // This namespace holds the enums for convenient HW I/O access
 
@@ -20,4 +20,4 @@ namespace AvrInputOutput
     };
 } // namespace AvrInputOutput
 
-#endif // AVRINPUTOUTPUT_H
+#endif // TMP_AVR_INPUT_OUTPUT_HPP

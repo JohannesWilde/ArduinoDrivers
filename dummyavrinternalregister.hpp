@@ -1,5 +1,5 @@
-#ifndef DUMMYAVRINTERNALREGISTER_HPP
-#define DUMMYAVRINTERNALREGISTER_HPP
+#ifndef TMP_DUMMY_AVR_INTERNAL_REGISTER_HPP
+#define TMP_DUMMY_AVR_INTERNAL_REGISTER_HPP
 
 #include <avr/io.h>
 #include <avr/sfr_defs.h>
@@ -80,4 +80,4 @@ struct DummyAvrInternalRegister
 template<uintptr_t registerAddress_, typename RegisterType_, bool functional_, RegisterType_ nonFunctionalDefaultValue>
 RegisterType_ DummyAvrInternalRegister<registerAddress_, RegisterType_, functional_, nonFunctionalDefaultValue>::dummyRegister = 0;
 
-#endif // DUMMYAVRINTERNALREGISTER_HPP
+#endif // TMP_DUMMY_AVR_INTERNAL_REGISTER_HPP

@@ -1,5 +1,5 @@
-#ifndef AVRPINHELPER_HPP
-#define AVRPINHELPER_HPP
+#ifndef TMP_AVR_PIN_HELPER_HPP
+#define TMP_AVR_PIN_HELPER_HPP
 
 // Helpers for even more convenient AvrPin handling.
 template<typename AvrPin>
@@ -24,4 +24,4 @@ static void toggleTwice()
 }
 
 
-#endif // AVRPINHELPER_HPP
+#endif // TMP_AVR_PIN_HELPER_HPP

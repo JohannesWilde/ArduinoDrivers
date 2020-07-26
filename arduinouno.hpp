@@ -17,8 +17,8 @@
 //      (D 8) PB0 14|    |15  PB1 (D 9) PWM
 //                  +----+
 
-#ifndef ARDUINOUNO_HPP
-#define ARDUINOUNO_HPP
+#ifndef TMP_ARDUINO_UNO_HPP
+#define TMP_ARDUINO_UNO_HPP
 
 #ifndef __AVR_ATmega328P__
 #warning "An Arduino Uno typically has an Atmega328p - currently something else is #defined."
@@ -57,4 +57,4 @@ public:
     typedef D13 LED_BUILTIN;
 };
 
-#endif // ARDUINOUNO_H
+#endif // TMP_ARDUINO_UNO_HPP

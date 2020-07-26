@@ -1,5 +1,5 @@
-#ifndef AVRINTERNALREGISTER_HPP
-#define AVRINTERNALREGISTER_HPP
+#ifndef TMP_AVR_INTERNAL_REGISTER_HPP
+#define TMP_AVR_INTERNAL_REGISTER_HPP
 
 #include <avr/io.h>
 #include <avr/sfr_defs.h>
@@ -98,4 +98,4 @@ struct AvrInternalRegister
     }
 };
 
-#endif // AVRINTERNALREGISTER_HPP
+#endif // TMP_AVR_INTERNAL_REGISTER_HPP

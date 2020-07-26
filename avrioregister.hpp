@@ -1,5 +1,5 @@
-#ifndef AVRIOREGISTER_HPP
-#define AVRIOREGISTER_HPP
+#ifndef TMP_AVR_IO_REGISTER_HPP
+#define TMP_AVR_IO_REGISTER_HPP
 
 #include <stdint.h>
 #include "avrinputoutput.hpp"
@@ -107,4 +107,4 @@ public:
     }
 };
 
-#endif // AVRIOREGISTER_H
+#endif // TMP_AVR_IO_REGISTER_HPP

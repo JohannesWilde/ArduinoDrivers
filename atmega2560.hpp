@@ -1,5 +1,5 @@
-#ifndef ATMEG2560_HPP
-#define ATMEGA328P_HPP
+#ifndef TMP_ATMEG2560_HPP
+#define TMP_ATMEG2560_HPP
 
 // ATMEL ATMEGA2560
 
@@ -162,4 +162,4 @@ public:
     typedef AvrPin<RegisterL, PORTL7> L7;
 };
 
-#endif // ATMEGA328P_HPP
+#endif // TMP_ATMEG2560_HPP
