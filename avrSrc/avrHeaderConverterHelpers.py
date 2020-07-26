@@ -14,7 +14,7 @@ typedef AvrInternalRegister<SfrMemoryFromIoAddress<PIN{registerName}_REGISTER>::
 typedef AvrInternalRegister<SfrMemoryFromIoAddress<DDR{registerName}_REGISTER>::address, uint8_t> Ddr{registerName}Internal;
 typedef AvrIoRegister<Port{registerName}Internal, Ddr{registerName}Internal, Pin{registerName}Internal> Register{registerName};"""
 
-    formString2 = """typedef AvrPin<Register{registerName}, PORT{registerName}{portNumber}> {registerName}{portNumber};"""
+    formString2 = """typedef AvrPin<Register{registerName}, PORT{registerName}{portNumber}> pin{registerName}{portNumber};"""
     #
     # for registerName in registersNames:
     #     print(formString.format(registerName=registerName))
@@ -22,7 +22,7 @@ typedef AvrIoRegister<Port{registerName}Internal, Ddr{registerName}Internal, Pin
     #         print(formString2.format(registerName=registerName, portNumber=portNumber))
 
 
-    formString3 = 'typedef typename {className}::{registerName}{portNumber} ;'
+    formString3 = 'typedef typename {className}::pin{registerName}{portNumber} ;'
 
     for registerName in registersNames:
         for portNumber in range(portNumbers['min'], portNumbers['max']+1):
