@@ -62,27 +62,27 @@ public:
     // this will reconfigure the ports - so set the sheftRegister driver after having called this.
     static void initialize()
     {
-        DeviceTester_::initialize(AvrInputOutput::OUTPUT_LOW,   // Gnd
-                                  AvrInputOutput::OUTPUT_HIGH,  // Vcc
-                                  AvrInputOutput::INPUT_PULLUP, // Output
-                                  AvrInputOutput::OUTPUT_LOW,   // Set
-                                  AvrInputOutput::OUTPUT_LOW,   // Reset
-                                  AvrInputOutput::OUTPUT_LOW,   // OutputEnable
-                                  AvrInputOutput::INPUT,        // ----------------------------------
-                                  AvrInputOutput::INPUT,        // values for dummy-pins should be meaningsless
-                                  AvrInputOutput::INPUT,        // the safest guess however is INPUT [no current in or out].
-                                  AvrInputOutput::INPUT,
-                                  AvrInputOutput::INPUT,
-                                  AvrInputOutput::INPUT,
-                                  AvrInputOutput::INPUT,
-                                  AvrInputOutput::INPUT,
-                                  AvrInputOutput::INPUT,
-                                  AvrInputOutput::INPUT);
+        DeviceTester_::initialize(AvrInputOutput::OutputLow,   // Gnd
+                                  AvrInputOutput::OutputHigh,  // Vcc
+                                  AvrInputOutput::InputPullup, // Output
+                                  AvrInputOutput::OutputLow,   // Set
+                                  AvrInputOutput::OutputLow,   // Reset
+                                  AvrInputOutput::OutputLow,   // OutputEnable
+                                  AvrInputOutput::Input,        // ----------------------------------
+                                  AvrInputOutput::Input,        // values for dummy-pins should be meaningsless
+                                  AvrInputOutput::Input,        // the safest guess however is INPUT [no current in or out].
+                                  AvrInputOutput::Input,
+                                  AvrInputOutput::Input,
+                                  AvrInputOutput::Input,
+                                  AvrInputOutput::Input,
+                                  AvrInputOutput::Input,
+                                  AvrInputOutput::Input,
+                                  AvrInputOutput::Input);
     }
 
     static bool checkOutputEnabled()
     {
-        return checkOutputEnable(AvrInputOutput::HIGH);
+        return checkOutputEnable(AvrInputOutput::High);
     }
 
     static bool checkOutputEnable(AvrInputOutput::PinState const pinState)
@@ -168,14 +168,14 @@ public:
     {
         RsLatchDriver_::turnOff();
         Output_::clearPort();       // INPUT [i.e. no pullup!]
-        Vcc_::clearPort();          // OUTPUT_LOW
+        Vcc_::clearPort();          // OutputLow
         DeviceTester_::turnOffDevice();
     }
 
     static void turnOnDevice()
     {
         DeviceTester_::turnOnDevice();
-        Vcc_::setPort();            // OUTPUT_HIGH
+        Vcc_::setPort();            // OutputHigh
         Output_::setPort();         // INPUT_PULLUP [i.e. no voltage!]
         RsLatchDriver_::turnOn();
     }
@@ -187,13 +187,13 @@ public:
     {
         bool testSuccess = true;
         testSuccess &= !checkOutputEnabled();
-        testSuccess &= checkSet(AvrInputOutput::LOW);
-        testSuccess &= checkReset(AvrInputOutput::LOW);
+        testSuccess &= checkSet(AvrInputOutput::Low);
+        testSuccess &= checkReset(AvrInputOutput::Low);
 
-        testSuccess &= checkOutput(AvrInputOutput::HIGH); // internal pull-up pulls high for disabled output
+        testSuccess &= checkOutput(AvrInputOutput::High); // internal pull-up pulls high for disabled output
 
         RsLatchDriver_::enableOutput();
-        testSuccess &= checkOutput(AvrInputOutput::LOW);
+        testSuccess &= checkOutput(AvrInputOutput::Low);
 
         RsLatchDriver_::disableOutput();
 
@@ -225,7 +225,7 @@ public:
         testSuccess &= checkReset(resetState);
 
         // internal pull-up pulls high for disabled output
-        testSuccess &= checkOutput(AvrInputOutput::HIGH);
+        testSuccess &= checkOutput(AvrInputOutput::High);
 
         return testSuccess;
     }
@@ -249,7 +249,7 @@ public:
         testSuccess &= checkReset(resetState);
 
         // because the internal pull-up pulls high for disabled output, reset above and check here for LOW
-        testSuccess &= checkOutput(AvrInputOutput::LOW);
+        testSuccess &= checkOutput(AvrInputOutput::Low);
 
         RsLatchDriver_::disableOutput();
         return testSuccess;
@@ -263,15 +263,15 @@ public:
         RsLatchDriver_::reset();
         RsLatchDriver_::enableOutput();
 
-        testSuccess &= checkSet(AvrInputOutput::LOW);
-        testSuccess &= checkReset(AvrInputOutput::LOW);
-        testSuccess &= checkOutput(AvrInputOutput::LOW);
+        testSuccess &= checkSet(AvrInputOutput::Low);
+        testSuccess &= checkReset(AvrInputOutput::Low);
+        testSuccess &= checkOutput(AvrInputOutput::Low);
 
         RsLatchDriver_::set();
 
-        testSuccess &= checkSet(AvrInputOutput::LOW);
-        testSuccess &= checkReset(AvrInputOutput::LOW);
-        testSuccess &= checkOutput(AvrInputOutput::HIGH);
+        testSuccess &= checkSet(AvrInputOutput::Low);
+        testSuccess &= checkReset(AvrInputOutput::Low);
+        testSuccess &= checkOutput(AvrInputOutput::High);
 
         RsLatchDriver_::disableOutput();
         return testSuccess;
@@ -285,15 +285,15 @@ public:
         RsLatchDriver_::set();
         RsLatchDriver_::enableOutput();
 
-        testSuccess &= checkSet(AvrInputOutput::LOW);
-        testSuccess &= checkReset(AvrInputOutput::LOW);
-        testSuccess &= checkOutput(AvrInputOutput::HIGH);
+        testSuccess &= checkSet(AvrInputOutput::Low);
+        testSuccess &= checkReset(AvrInputOutput::Low);
+        testSuccess &= checkOutput(AvrInputOutput::High);
 
         RsLatchDriver_::reset();
 
-        testSuccess &= checkSet(AvrInputOutput::LOW);
-        testSuccess &= checkReset(AvrInputOutput::LOW);
-        testSuccess &= checkOutput(AvrInputOutput::LOW);
+        testSuccess &= checkSet(AvrInputOutput::Low);
+        testSuccess &= checkReset(AvrInputOutput::Low);
+        testSuccess &= checkOutput(AvrInputOutput::Low);
 
         RsLatchDriver_::disableOutput();
         return testSuccess;

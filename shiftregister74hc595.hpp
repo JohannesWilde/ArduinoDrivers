@@ -27,11 +27,11 @@ public:
     static void initialize()
     {
         // set data directions of pins and default port states
-        InvertedOutputEnable_::setType(AvrInputOutput::OUTPUT_HIGH); // disable output by default
-        SerialInput_::setType(AvrInputOutput::OUTPUT_LOW);           // default LOW
-        InvertedShiftRegisterClear_::setType(AvrInputOutput::OUTPUT_HIGH); // do not clear the shift register by default
-        ShiftRegisterClock_::setType(AvrInputOutput::OUTPUT_LOW);  // default to LOW
-        ShowRegisterClock_::setType(AvrInputOutput::OUTPUT_LOW);   // default to LOW
+        InvertedOutputEnable_::setType(AvrInputOutput::OutputHigh); // disable output by default
+        SerialInput_::setType(AvrInputOutput::OutputLow);           // default LOW
+        InvertedShiftRegisterClear_::setType(AvrInputOutput::OutputHigh); // do not clear the shift register by default
+        ShiftRegisterClock_::setType(AvrInputOutput::OutputLow);  // default to LOW
+        ShowRegisterClock_::setType(AvrInputOutput::OutputLow);   // default to LOW
         // the shift and the show register will be cleared during initialization
         clearShiftRegister();                                       // clear both registers
         showShiftRegister();

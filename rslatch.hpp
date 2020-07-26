@@ -18,9 +18,9 @@ public:
     static void initialize()
     {
         // set data directions of pins and default port states
-        OutputEnablePin_::setType(AvrInputOutput::OUTPUT_LOW);
-        SetPin_::setType(AvrInputOutput::OUTPUT_LOW);
-        ResetPin_::setType(AvrInputOutput::OUTPUT_LOW);
+        OutputEnablePin_::setType(AvrInputOutput::OutputLow);
+        SetPin_::setType(AvrInputOutput::OutputLow);
+        ResetPin_::setType(AvrInputOutput::OutputLow);
         reset();
     }
 

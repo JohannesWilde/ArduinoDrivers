@@ -29,13 +29,13 @@ public:
     static void initialize()
     {
         // set data directions of pins and default port states
-        SerialOutput_::setType(AvrInputOutput::INPUT);
-        InvertedSerialOutput_::setType(AvrInputOutput::INPUT);
+        SerialOutput_::setType(AvrInputOutput::Input);
+        InvertedSerialOutput_::setType(AvrInputOutput::Input);
 
-        InvertedParallelLoad_::setType(AvrInputOutput::OUTPUT_HIGH); // disable parallel load by default
-        SerialInput_::setType(AvrInputOutput::OUTPUT_LOW); // SerialInput_ LOW by default
-        ShiftRegisterClock_::setType(AvrInputOutput::OUTPUT_LOW); // ShiftRegisterClock_ LOW by default
-        InvertedClockEnable_::setType(AvrInputOutput::OUTPUT_LOW); // enable now only to shift in default values
+        InvertedParallelLoad_::setType(AvrInputOutput::OutputHigh); // disable parallel load by default
+        SerialInput_::setType(AvrInputOutput::OutputLow); // SerialInput_ LOW by default
+        ShiftRegisterClock_::setType(AvrInputOutput::OutputLow); // ShiftRegisterClock_ LOW by default
+        InvertedClockEnable_::setType(AvrInputOutput::OutputLow); // enable now only to shift in default values
         clearShiftRegister();
         disableClock(); // default InvertedClockEnable to HIGH
     }
@@ -100,12 +100,12 @@ public:
 
     static bool parallelLoadEnabled()
     {
-        return (AvrInputOutput::LOW == InvertedParallelLoad_::readPin());
+        return (AvrInputOutput::Low == InvertedParallelLoad_::readPin());
     }
 
     static bool clockEnabled()
     {
-        return (AvrInputOutput::LOW == InvertedClockEnable_::readPin());
+        return (AvrInputOutput::Low == InvertedClockEnable_::readPin());
     }
 
     // Please note that is does not make much sense calling the following methods

@@ -28,9 +28,9 @@ public:
     static void initialize()
     {
         // set data directions of pins and default port states
-        SerialInput_::setType(AvrInputOutput::OUTPUT_LOW);           // default LOW
-        ShiftRegisterClock_::setType(AvrInputOutput::OUTPUT_LOW);  // default to LOW
-        SerialOutput_::setType(AvrInputOutput::INPUT);
+        SerialInput_::setType(AvrInputOutput::OutputLow);           // default LOW
+        ShiftRegisterClock_::setType(AvrInputOutput::OutputLow);  // default to LOW
+        SerialOutput_::setType(AvrInputOutput::Input);
         clearShiftRegister();
     }
 
@@ -122,7 +122,7 @@ public:
                 // to check in the following while-loop, whether I don't try to read too many bits.
                 while (curBitMask > 0)
                 {
-                    (AvrInputOutput::HIGH == SerialOutput_::readPin()) ?
+                    (AvrInputOutput::High == SerialOutput_::readPin()) ?
                               (*bitStreamArrayByte) |= curBitMask :      // set bit in array
                               (*bitStreamArrayByte) &= ~curBitMask;      // clear bit in array
                     curBitMask >>= 1; // next bit [lower significance]
@@ -163,7 +163,7 @@ public:
                                 SerialInput_::setPort() :
                                 SerialInput_::clearPort();
 
-                    (AvrInputOutput::HIGH == SerialOutput_::readPin()) ?
+                    (AvrInputOutput::High == SerialOutput_::readPin()) ?
                               (*bitStreamArrayOutByte) |= curBitMask :      // set bit in array
                               (*bitStreamArrayOutByte) &= ~curBitMask;      // clear bit in array
 
@@ -203,7 +203,7 @@ public:
                                 SerialInput_::setPort() :
                                 SerialInput_::clearPort();
                     // then read in current value at serialOutput_
-                    (AvrInputOutput::HIGH == SerialOutput_::readPin()) ?
+                    (AvrInputOutput::High == SerialOutput_::readPin()) ?
                               (*bitStreamArrayByte) |= curBitMask :      // set bit in array
                               (*bitStreamArrayByte) &= ~curBitMask;      // clear bit in array
 
