@@ -69,9 +69,6 @@ public:
     typedef AvrPin<RegisterC, PORTC3> C3;
     typedef AvrPin<RegisterC, PORTC4> C4;
     typedef AvrPin<RegisterC, PORTC5> C5;
-
-    // convenience names
-    typedef B5 LED_BUILTIN;
 };
 
 #endif // ATMEGA328P_HPP

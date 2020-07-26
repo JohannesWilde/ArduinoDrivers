@@ -50,6 +50,9 @@ public:
     typedef typename Atmega328p::C3 A3;
     typedef typename Atmega328p::C4 A4;
     typedef typename Atmega328p::C5 A5;
+
+    // convenience names
+    typedef B5 LED_BUILTIN;
 };
 
 #endif // ARDUINOUNO_H
