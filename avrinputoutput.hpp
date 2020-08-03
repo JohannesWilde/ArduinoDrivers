@@ -5,7 +5,8 @@
 
 namespace AvrInputOutput
 {
-    enum PinType {
+    enum PinType
+    {
         OutputHigh,
         OutputLow,
         Input,
@@ -14,7 +15,8 @@ namespace AvrInputOutput
 
     // don't change these PinState-values, as they are the ones hardcoded in the
     // chip and currently not transformed in the reading methods.
-    enum PinState {
+    enum PinState
+    {
         Low=0,
         High=1
     };
