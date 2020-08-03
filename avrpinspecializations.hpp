@@ -19,21 +19,32 @@
 
 
 template<typename AvrIoRegister, unsigned pinNumber_>
-struct AvrPinInput : private AvrPin<AvrIoRegister, pinNumber_>
+struct AvrPinInput : protected AvrPin<AvrIoRegister, pinNumber_>
 {
-    static void initialize()
-    {
-        avrPin_::setType(AvrInputOutput::Input);
-    }
+    static void initialize() = 0;
 
     static AvrInputOutput::PinState read()
     {
         return avrPin_::readPin();
     }
 
-private:
+protected:
     typedef AvrPin<AvrIoRegister, pinNumber_> avrPin_;
 };
+
+
+template<typename AvrIoRegister, unsigned pinNumber_>
+struct AvrPinInputFloating : private AvrPinInput<AvrIoRegister, pinNumber_>
+{
+    static void initialize()
+    {
+        avrPin_::setType(AvrInputOutput::Input);
+    }
+
+private:
+    typedef typename AvrPinInput<AvrIoRegister, pinNumber_>::avrPin_ avrPin_;
+};
+
 
 template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinInputPullup : private AvrPin<AvrIoRegister, pinNumber_>
@@ -43,14 +54,10 @@ struct AvrPinInputPullup : private AvrPin<AvrIoRegister, pinNumber_>
         avrPin_::setType(AvrInputOutput::InputPullup);
     }
 
-    static AvrInputOutput::PinState read()
-    {
-        return avrPin_::readPin();
-    }
-
 private:
-    typedef AvrPin<AvrIoRegister, pinNumber_> avrPin_;
+    typedef typename AvrPinInput<AvrIoRegister, pinNumber_>::avrPin_ avrPin_;
 };
+
 
 template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinOutput : private AvrPin<AvrIoRegister, pinNumber_>
