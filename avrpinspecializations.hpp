@@ -6,12 +6,12 @@
 template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinInput : private AvrPin<AvrIoRegister, pinNumber_>
 {
-    AvrPinInput()
+    static void initialize()
     {
         avrPin_::setType(AvrInputOutput::Input);
     }
 
-    AvrInputOutput::PinState read()
+    static AvrInputOutput::PinState read()
     {
         return avrPin_::readPin();
     }
@@ -23,12 +23,12 @@ private:
 template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinInputPullup : private AvrPin<AvrIoRegister, pinNumber_>
 {
-    AvrPinInputPullup()
+    static void initialize()
     {
         avrPin_::setType(AvrInputOutput::InputPullup);
     }
 
-    AvrInputOutput::PinState read()
+    static AvrInputOutput::PinState read()
     {
         return avrPin_::readPin();
     }
@@ -40,38 +40,49 @@ private:
 template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinOutput : private AvrPin<AvrIoRegister, pinNumber_>
 {
-    AvrPinOutput(AvrInputOutput::PinState const pinState)
-    {
-        AvrInputOutput::PinType const initialState = (AvrInputOutput::High == pinState) ? AvrInputOutput::OutputHigh : AvrInputOutput::OutputLow;
-        AvrPin<AvrIoRegister, pinNumber_>::setType(initialState);
-    }
-
     template<AvrInputOutput::PinState pinState>
-    void write();
+    static void initialize();
 
     template<>
-    void write<AvrInputOutput::High>()
+    static void initialize<AvrInputOutput::High>()
+    {
+        avrPin_::setType(AvrInputOutput::OutputHigh);
+    }
+
+    template<>
+    static void initialize<AvrInputOutput::Low>()
+    {
+        avrPin_::setType(AvrInputOutput::OutputLow);
+    }
+
+
+    template<AvrInputOutput::PinState pinState>
+    static void write();
+
+    template<>
+    static void write<AvrInputOutput::High>()
     {
         avrPin_::setPort();
     }
 
     template<>
-    void write<AvrInputOutput::Low>()
+    static void write<AvrInputOutput::Low>()
     {
         avrPin_::clearPort();
     }
 
-    void toggle()
+
+    static void toggle()
     {
         avrPin_::togglePort();
     }
 
-//    AvrInputOutput::PinState readPin()
+//    static AvrInputOutput::PinState read()
 //    {
 //        return avrPin_::readPin();
 //    }
 
-    AvrInputOutput::PinState read()
+    static AvrInputOutput::PinState read()
     {
         return avrPin_::readPort();
     }
