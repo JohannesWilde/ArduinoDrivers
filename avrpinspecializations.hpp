@@ -11,7 +11,7 @@ struct AvrPinInput : private AvrPin<AvrIoRegister, pinNumber_>
         avrPin_::setType(AvrInputOutput::Input);
     }
 
-    static AvrInputOutput::PinState read()
+    AvrInputOutput::PinState read()
     {
         return avrPin_::readPin();
     }
@@ -28,7 +28,7 @@ struct AvrPinInputPullup : private AvrPin<AvrIoRegister, pinNumber_>
         avrPin_::setType(AvrInputOutput::InputPullup);
     }
 
-    static AvrInputOutput::PinState read()
+    AvrInputOutput::PinState read()
     {
         return avrPin_::readPin();
     }
@@ -47,31 +47,31 @@ struct AvrPinOutput : private AvrPin<AvrIoRegister, pinNumber_>
     }
 
     template<AvrInputOutput::PinState pinState>
-    static void write();
+    void write();
 
     template<>
-    static void write<AvrInputOutput::High>()
+    void write<AvrInputOutput::High>()
     {
         avrPin_::setPort();
     }
 
     template<>
-    static void write<AvrInputOutput::Low>()
+    void write<AvrInputOutput::Low>()
     {
         avrPin_::clearPort();
     }
 
-    static void toggle()
+    void toggle()
     {
         avrPin_::togglePort();
     }
 
-//    static AvrInputOutput::PinState readPin()
+//    AvrInputOutput::PinState readPin()
 //    {
 //        return avrPin_::readPin();
 //    }
 
-    static AvrInputOutput::PinState read()
+    AvrInputOutput::PinState read()
     {
         return avrPin_::readPort();
     }
