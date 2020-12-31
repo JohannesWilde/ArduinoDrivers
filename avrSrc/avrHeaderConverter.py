@@ -18,7 +18,10 @@ include be replaced with this customized version even when including io.h.
 Please note, that in order for that to work, this submodule will have to be added to the CMake include directories first
 [include_directories(${PROJECT_SOURCE_DIR}/ArduinoDrivers)].
 
-Alternatively one can replace the original files [e.g. in /usr/share/arduino/hardware/tools/avr/lib/avr/include/avr].
+Alternatively one can replace the original files [e.g. in 
+    Linux: /usr/share/arduino/hardware/tools/avr/lib/avr/include/avr
+    Windows: c:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr
+].
 """
 
 if __name__ == "__main__":
