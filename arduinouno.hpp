@@ -54,7 +54,7 @@ public:
     typedef typename Atmega328p::pinC5 A5;
 
     // convenience names
-    typedef D13 LED_BUILTIN;
+    typedef D13 BUILTIN_LED;
 };
 
 #endif // TMP_ARDUINO_UNO_HPP

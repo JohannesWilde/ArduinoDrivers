@@ -112,7 +112,7 @@ public:
     typedef typename Atmega2560::pinL7 D42;
 
     // convenience names
-    typedef D13 LED_BUILTIN;
+    typedef D13 BUILTIN_LED;
 };
 
 #endif // TMP_ARDUINO_MEGA_HPP
