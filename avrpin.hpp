@@ -16,6 +16,8 @@ struct AvrPin
         AvrIoRegister::setType(pinType, bitMask);
     }
 
+    // ----------------------------------------------------------------------------------------------------
+
     static void togglePort()
     {
         AvrIoRegister::togglePort(bitMask);
@@ -36,15 +38,51 @@ struct AvrPin
         return checkPinState_(AvrIoRegister::readPort());
     }
 
+    // ----------------------------------------------------------------------------------------------------
+
+    static void togglePin()
+    {
+        AvrIoRegister::togglePin(bitMask);
+    }
+
+    static void setPin()
+    {
+        AvrIoRegister::setPin(bitMask);
+    }
+
+    static void clearPin()
+    {
+        AvrIoRegister::clearPin(bitMask);
+    }
+
     static typename AvrInputOutput::PinState readPin()
     {
         return checkPinState_(AvrIoRegister::readPin());
+    }
+
+    // ----------------------------------------------------------------------------------------------------
+
+    static void toggleDdr()
+    {
+        AvrIoRegister::toggleDdr(bitMask);
+    }
+
+    static void setDdr()
+    {
+        AvrIoRegister::setDdr(bitMask);
+    }
+
+    static void clearDdr()
+    {
+        AvrIoRegister::clearDdr(bitMask);
     }
 
     static typename AvrInputOutput::PinState readDdr()
     {
         return checkPinState_(AvrIoRegister::readDdr());
     }
+
+    // ----------------------------------------------------------------------------------------------------
 
 protected:
     // this checks, whether the pin is set in the registerValue or not -
