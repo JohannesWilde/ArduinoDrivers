@@ -7,7 +7,7 @@
 namespace PowerbankKeepAliveProperties
 {
 
-typedef uint8_t Time_t;
+typedef uint8_t Duration_t; // in number of update() calls
 
 enum State
 {
@@ -32,8 +32,8 @@ enum State
  * intended.
  */
 template<typename AvrPin_,
-         PowerbankKeepAliveProperties::Time_t DurationActive_,
-         PowerbankKeepAliveProperties::Time_t DurationInactive_>
+         PowerbankKeepAliveProperties::Duration_t DurationActive_,
+         PowerbankKeepAliveProperties::Duration_t DurationInactive_>
 class PowerbankKeepAlive
 {
     static_assert (DurationActive_ > 0, "PowerbankKeepAlive::DurationActive_ must be greater than 0.");
@@ -41,8 +41,8 @@ class PowerbankKeepAlive
 
 public:
     typedef AvrPin_ Pin;
-    static PowerbankKeepAliveProperties::Time_t constexpr DurationActive = DurationActive_;
-    static PowerbankKeepAliveProperties::Time_t constexpr DurationInactive = DurationInactive_;
+    static PowerbankKeepAliveProperties::Duration_t constexpr DurationActive = DurationActive_;
+    static PowerbankKeepAliveProperties::Duration_t constexpr DurationInactive = DurationInactive_;
 
     static void initialize(PowerbankKeepAliveProperties::State const beginState = PowerbankKeepAliveProperties::State::Inactive)
     {
@@ -93,7 +93,7 @@ public:
     }
 
 private:
-    static PowerbankKeepAliveProperties::Time_t updateTimesSinceLastToggle_;
+    static PowerbankKeepAliveProperties::Duration_t updateTimesSinceLastToggle_;
 
     static void setState_(PowerbankKeepAliveProperties::State const state)
     {
@@ -116,8 +116,8 @@ private:
 
 
 template<typename AvrPin_,
-         PowerbankKeepAliveProperties::Time_t DurationActive_,
-         PowerbankKeepAliveProperties::Time_t DurationInactive_>
-PowerbankKeepAliveProperties::Time_t PowerbankKeepAlive<AvrPin_, DurationActive_, DurationInactive_>::updateTimesSinceLastToggle_;
+         PowerbankKeepAliveProperties::Duration_t DurationActive_,
+         PowerbankKeepAliveProperties::Duration_t DurationInactive_>
+PowerbankKeepAliveProperties::Duration_t PowerbankKeepAlive<AvrPin_, DurationActive_, DurationInactive_>::updateTimesSinceLastToggle_;
 
 #endif // POWERBANK_KEEP_ALIVE_HPP
