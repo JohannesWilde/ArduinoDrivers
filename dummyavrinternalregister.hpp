@@ -21,8 +21,8 @@ struct DummyAvrInternalRegister
 {
     // make RegisterType accessible via "typename DummyAvrInternalRegister<address, type>::RegisterType"
     typedef RegisterType_ RegisterType;
-    static const uintptr_t registerAddress = registerAddress_;
-    static const bool functional = functional_;
+    static constexpr uintptr_t registerAddress = registerAddress_;
+    static constexpr bool functional = functional_;
 
     // this value is only used if functional_ is true
     static RegisterType dummyRegister; // this is the internal register value

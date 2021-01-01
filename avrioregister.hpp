@@ -14,7 +14,7 @@
 template<typename T, typename U>
 struct is_same_
 {
-    static const int value = -1;
+    static constexpr int value = -1;
 };
 
 // in case both template parameters are the same, set the value to 1
@@ -22,7 +22,7 @@ struct is_same_
 template<typename T>
 struct is_same_<T, T>
 {
-    static const int value = 1;
+    static constexpr int value = 1;
 };
 
 // depending on whether T and U are the same type or not, this will not or will fail during compilation
