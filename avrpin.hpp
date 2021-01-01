@@ -1,7 +1,6 @@
 #ifndef TMP_AVRPIN_HPP
 #define TMP_AVRPIN_HPP
 
-#include <stdint.h>
 #include "avrinputoutput.hpp"
 
 // Struct for handling a single pin in a register conveniently.
