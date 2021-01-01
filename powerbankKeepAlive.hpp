@@ -44,19 +44,19 @@ public:
     static PowerbankKeepAliveProperties::Time_t constexpr DurationActive = DurationActive_;
     static PowerbankKeepAliveProperties::Time_t constexpr DurationInactive = DurationInactive_;
 
-    PowerbankKeepAlive(PowerbankKeepAliveProperties::State const beginState = PowerbankKeepAliveProperties::State::Inactive)
-        : updateTimesSinceLastToggle_(0)
+    static void initialize(PowerbankKeepAliveProperties::State const beginState = PowerbankKeepAliveProperties::State::Inactive)
     {
         AvrPin_::clearPort(); // PORTxn = 0 => output low or input without pull-up
+        updateTimesSinceLastToggle_ = 0;
         setState_(beginState);
     }
 
-    ~PowerbankKeepAlive()
+    static void deinitialize()
     {
         setState_(PowerbankKeepAliveProperties::State::Inactive);
     }
 
-    bool isActive()
+    static bool isActive()
     {
         AvrInputOutput::PinState const currentState = AvrPin_::readDdr();
         return (AvrInputOutput::PinState::High == currentState);
@@ -64,7 +64,7 @@ public:
 
     // This relies on DurationAcitve_ and DurationInactive_ being greater than 0
     // [everything else would make no sense anyway].
-    void update()
+    static void update()
     {
         ++updateTimesSinceLastToggle_;
 
@@ -93,7 +93,7 @@ public:
     }
 
 private:
-    PowerbankKeepAliveProperties::Time_t updateTimesSinceLastToggle_;
+    static PowerbankKeepAliveProperties::Time_t updateTimesSinceLastToggle_;
 
     static void setState_(PowerbankKeepAliveProperties::State const state)
     {
@@ -114,5 +114,10 @@ private:
 
 };
 
+
+template<typename AvrPin_,
+         PowerbankKeepAliveProperties::Time_t DurationActive_,
+         PowerbankKeepAliveProperties::Time_t DurationInactive_>
+PowerbankKeepAliveProperties::Time_t PowerbankKeepAlive<AvrPin_, DurationActive_, DurationInactive_>::updateTimesSinceLastToggle_;
 
 #endif // POWERBANK_KEEP_ALIVE_HPP
