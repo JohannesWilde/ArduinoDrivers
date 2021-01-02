@@ -71,6 +71,56 @@ public:
         return durationToState(previousDuration_);
     }
 
+    // convenience access methods
+
+    static bool isDownShort()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isDown() &&
+                (ButtonTimedProperties::ButtonStateDuration::Short == currentState()));
+    }
+
+    static bool isDownLong()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isDown() &&
+                (ButtonTimedProperties::ButtonStateDuration::Long == currentState()));
+    }
+
+    static bool isUpShort()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isUp() &&
+                (ButtonTimedProperties::ButtonStateDuration::Short == currentState()));
+    }
+
+    static bool isUpLong()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isUp() &&
+                (ButtonTimedProperties::ButtonStateDuration::Long == currentState()));
+    }
+
+    static bool pressedAfterShort()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::pressed() &&
+                (ButtonTimedProperties::ButtonStateDuration::Short == previousState()));
+    }
+
+    static bool pressedAfterLong()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::pressed() &&
+                (ButtonTimedProperties::ButtonStateDuration::Long == previousState()));
+    }
+
+    static bool releasedAfterShort()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::released() &&
+                (ButtonTimedProperties::ButtonStateDuration::Short == previousState()));
+    }
+
+    static bool releasedAfterLong()
+    {
+        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::released() &&
+                (ButtonTimedProperties::ButtonStateDuration::Long == previousState()));
+    }
+
 protected:
     static ButtonTimedProperties::Duration_t getCurrentDuration_()
     {
