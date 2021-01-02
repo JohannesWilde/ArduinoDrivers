@@ -53,22 +53,6 @@ public:
     }
 
     /**
-     * @brief wasDown - button was previously being pressed down.
-     */
-    static bool wasDown()
-    {
-        return isDown_(previousState_);
-    }
-
-    /**
-     * @brief wasUp - button was previously not being pressed down.
-     */
-    static bool wasUp()
-    {
-        return !wasDown();
-    }
-
-    /**
      * @brief pressed - button was pressed.
      */
     static bool pressed()
