@@ -41,7 +41,7 @@ public:
      */
     static bool isDown()
     {
-        return (PinDownState_ == currentState_);
+        return isDown_(currentState_);
     }
 
     /**
@@ -50,6 +50,22 @@ public:
     static bool isUp()
     {
         return !isDown();
+    }
+
+    /**
+     * @brief wasDown - button was previously being pressed down.
+     */
+    static bool wasDown()
+    {
+        return isDown_(previousState_);
+    }
+
+    /**
+     * @brief wasUp - button was previously not being pressed down.
+     */
+    static bool wasUp()
+    {
+        return !wasDown();
     }
 
     /**
@@ -83,6 +99,11 @@ protected:
 private:
     static AvrInputOutput::PinState currentState_;
     static AvrInputOutput::PinState previousState_;
+
+    static bool isDown_(AvrInputOutput::PinState const pinState)
+    {
+        return (PinDownState_ == pinState);
+    }
 };
 
 // ----------------------------------------------------------------------------------------------------
