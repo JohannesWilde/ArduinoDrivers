@@ -37,24 +37,32 @@ public:
     }
 
     /**
-   * isDown - button is currently being pressed down.
-   */
+     * @brief isDown - button is currently being pressed down.
+     */
     static bool isDown()
     {
         return (PinDownState_ == currentState_);
     }
 
     /**
-   * pressed - button was pressed.
-   */
+     * @brief isUp - button is currently not being pressed down.
+     */
+    static bool isUp()
+    {
+        return !isDown();
+    }
+
+    /**
+     * @brief pressed - button was pressed.
+     */
     static bool pressed()
     {
         return ((currentState_ != previousState_) && (PinDownState_ == currentState_));
     }
 
     /**
-   * released - button was released.
-   */
+     * @brief released - button was released.
+     */
     static bool released()
     {
         return ((currentState_ != previousState_) && (PinDownState_ != currentState_));
