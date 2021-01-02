@@ -140,11 +140,11 @@ private:
     static ButtonTimedProperties::ButtonStateDuration durationToState(ButtonTimedProperties::Duration_t const & duration)
     {
         ButtonTimedProperties::ButtonStateDuration state = ButtonTimedProperties::ButtonStateDuration::TooShort;
-        if (duration > DurationLong_)
+        if (duration >= DurationLong_)
         {
             state = ButtonTimedProperties::ButtonStateDuration::Long;
         }
-        else if (duration > DurationShort_)
+        else if (duration >= DurationShort_)
         {
             state = ButtonTimedProperties::ButtonStateDuration::Short;
         }
