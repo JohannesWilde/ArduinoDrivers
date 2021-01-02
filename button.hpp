@@ -8,15 +8,6 @@
 
 // ----------------------------------------------------------------------------------------------------
 
-namespace ButtonProperties
-{
-
-typedef uint8_t Duration_t; // in number of update() calls [must be unsigned, see update()]
-
-} // namespace ButtonProperties
-
-// ----------------------------------------------------------------------------------------------------
-
 template <typename AvrPin_,
           AvrInputOutput::PinState PinDownState_,
           bool PullupEnabled_>
@@ -29,7 +20,6 @@ public:
 
     static void initialize()
     {
-        // default to no pull-up
         AvrPin_::setType(AvrInputOutput::getInputType<PullupEnabled_>());
         currentState_ = AvrPin_::readPin();
         previousState_ = currentState_;
