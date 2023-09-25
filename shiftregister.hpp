@@ -103,7 +103,7 @@ public:
     // The first read in bit will be in the MSBy at the most significant position [not
     // necessarily MSB], while the last read in bit will be in the LSBy at the LSB.
     // This means, if only 6 bits are read in, then the first read in bit will be
-    // [MSB - bit 7, LSB - bit 0] at bit 6 and the last one at bit 0.
+    // [MSB - bit 7, LSB - bit 0] at bit 5 and the last one at bit 0.
     template<unsigned lengthInBits_>
     static void shiftOutBits(uint8_t * const bitStreamArray)
     {
@@ -224,6 +224,7 @@ public:
     template<unsigned bitOffset>
     static void pointerAndBitmaskAtBitoffset(uint8_t * const referencePointer, uint8_t * * const offsetPointer , uint8_t * const bitMask)
     {
+        static_assert(0 < bitOffset);
         // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
         // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
         unsigned const curByteNumber = ( (bitOffset - 1) / 8 );
@@ -237,12 +238,13 @@ public:
     template<unsigned bitOffset>
     static void pointerAndBitmaskAtBitoffset(uint8_t const * const referencePointer, uint8_t const * * const offsetPointer , uint8_t * const bitMask)
     {
+        static_assert(0 < bitOffset);
         // Because of integer division, one byte more will have to be used [unless length is a multiple of 8],
         // this "+1" however is compensated by the fact, that the offset in the array starts at 0 and not 1.
         unsigned const curByteNumber = ( (bitOffset - 1) / 8 );
         // Now find out, how many of the bits in the most significant byte will be used.
         // (bitOffset - ( curByteNumber * 8 )) is the number of bits in the most significant byte;
-        // because 0x01 has a bit at the first position alreade, subtract 1.
+        // because 0x01 has a bit at the first position already, subtract 1.
         *bitMask = static_cast<uint8_t>(0x01 << (bitOffset - ( curByteNumber * 8 ) - 1));
 
         *offsetPointer = referencePointer + curByteNumber; // move pointer to most significant byte
