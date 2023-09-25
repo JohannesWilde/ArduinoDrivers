@@ -20,6 +20,34 @@ namespace AvrInputOutput
         Low=0,
         High=1
     };
+
+
+    // convenience methods for access to respectively input or output only
+    template<bool PullupEnabled_>
+    AvrInputOutput::PinType getInputType()
+    {
+        return AvrInputOutput::PinType::Input;
+    }
+
+    template<PinState DesiredPinState_>
+    AvrInputOutput::PinType getOutputType()
+    {
+        return AvrInputOutput::PinType::OutputLow;
+    }
+
 } // namespace AvrInputOutput
+
+
+template<>
+AvrInputOutput::PinType AvrInputOutput::getInputType</*PullupEnabled*/ true>()
+{
+    return AvrInputOutput::PinType::InputPullup;
+}
+
+template<>
+AvrInputOutput::PinType AvrInputOutput::getOutputType</*DesiredPinState*/ AvrInputOutput::PinState::High>()
+{
+    return AvrInputOutput::PinType::OutputHigh;
+}
 
 #endif // TMP_AVR_INPUT_OUTPUT_HPP
