@@ -25,7 +25,7 @@ Alternatively one can replace the original files [e.g. in
 """
 
 if __name__ == "__main__":
-    filepath = "./iomxx0_1.h"
+    filepaths = ["./iom328p.h", "iomxx0_1.h"]
 
     conversionMacros = ["_SFR_MEM", "_SFR_IO"]
     # * - 0 to n repetitions
@@ -36,13 +36,15 @@ if __name__ == "__main__":
     # \\ - escaped backslash for Python's format
     regularExpressions = [re.compile("#\s*define\s*(.*?)\s*({conversionMacro})(\d+)\\((0(x|X)[0-9A-Fa-f]+)\\)".format(**{"conversionMacro": macro}))
                                                                                         for macro in conversionMacros]
-    filenameParts = path.splitext(path.basename(filepath))
-    outputFilename = "{filename}_converted{fileextension}".format(**{"filename": filenameParts[0], "fileextension": filenameParts[1]})
-    with open(filepath, "r") as file, open(outputFilename, "w") as outputFile:
-        for line in file:
-            for regularExpression in regularExpressions:
-                line = re.sub(regularExpression, "#define \\1_REGISTER \\4\n#define \\1_TYPE uint\\3_t\n#define \\1_ACCESS"
-                                                 " \\2\\3\n#define \\1 \\1_ACCESS(\\1_REGISTER)", line)
-            outputFile.write(line)
+
+    for filepath in filepaths:
+        filenameParts = path.splitext(path.basename(filepath))
+        outputFilename = "{filename}_converted{fileextension}".format(**{"filename": filenameParts[0], "fileextension": filenameParts[1]})
+        with open(filepath, "r") as file, open(outputFilename, "w") as outputFile:
+            for line in file:
+                for regularExpression in regularExpressions:
+                    line = re.sub(regularExpression, "#define \\1_REGISTER \\4\n#define \\1_TYPE uint\\3_t\n#define \\1_ACCESS"
+                                                     " \\2\\3\n#define \\1 \\1_ACCESS(\\1_REGISTER)", line)
+                outputFile.write(line)
 
     exit(0)
