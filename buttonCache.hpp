@@ -3,6 +3,11 @@
 
 // ----------------------------------------------------------------------------------------------------
 
+/**
+ * @brief The ButtonCache class monitors an actual button and provides state-change information.
+ * Button_ will have to provide the following member function:   bool isDown()  .
+ *
+ */
 template <typename Button_>
 class ButtonCache
 {
