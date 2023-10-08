@@ -5,7 +5,7 @@
 
 #include "buttonChanged.hpp"
 
-#include <limits>
+#include <limits.h>
 #include <stdint.h>
 
 // ----------------------------------------------------------------------------------------------------
@@ -59,7 +59,8 @@ public:
         else
         {
             // Only increase up to max of Duration_t - do not overflow!
-            if (currentDuration_ < std::numeric_limits<ButtonTimedProperties::Duration_t>::max())
+            static_assert(UCHAR_MAX == static_cast<ButtonTimedProperties::Duration_t>(-1));
+            if (currentDuration_ < UCHAR_MAX)
             {
                 ++currentDuration_;
             }
