@@ -1,33 +1,32 @@
-#ifndef TMP_BUTTON_CACHE_HPP
-#define TMP_BUTTON_CACHE_HPP
+#ifndef TMP_BUTTON_CACHED_HPP
+#define TMP_BUTTON_CACHED_HPP
 
 // ----------------------------------------------------------------------------------------------------
 
-#include "button.hpp"
-
-// ----------------------------------------------------------------------------------------------------
-
-template <typename Button_>
-class ButtonCache
+/**
+ * @brief The ButtonCache class monitors an actual button and provides state-change information.
+ * Button will have to provide the following member function:   bool isDown()  .
+ *
+ */
+template <typename Button>
+class ButtonCached : public Button
 {
 public:
-    typedef Button_ Button;
-
-    // Button_ will have to be initialized externally for now!
+    // Button will have to be initialized externally for now!
     static void initialize()
     {
-        isDown_ = Button::isDown();
+        Button::initialize();
         update();
     }
 
     static void deinitialize()
     {
+        Button::deinitialize();
     }
 
     // if this is not called often enough, this will miss intermediate states
     static void update()
     {
-        wasDown_ = isDown_;
         isDown_ = Button::isDown();
     }
 
@@ -47,35 +46,17 @@ public:
         return !isDown();
     }
 
-    /**
-     * @brief pressed - button was pressed.
-     */
-    static bool pressed()
-    {
-        return (isDown_ && !wasDown_);
-    }
-
-    /**
-     * @brief released - button was released.
-     */
-    static bool released()
-    {
-        return (!isDown_ && wasDown_);
-    }
-
 private:
     static bool isDown_;
-    static bool wasDown_;
+
+    ButtonCached() = delete;
 };
 
 // ----------------------------------------------------------------------------------------------------
 
-template <typename Button_>
-bool ButtonCache<Button_>::isDown_;
-
-template <typename Button_>
-bool ButtonCache<Button_>::wasDown_;
+template <typename Button>
+bool ButtonCached<Button>::isDown_;
 
 // ----------------------------------------------------------------------------------------------------
 
-#endif // TMP_BUTTON_CACHE_HPP
+#endif // TMP_BUTTON_CACHED_HPP

@@ -1,9 +1,12 @@
-#ifndef TMP_BUTTON_DURATION_HPP
-#define TMP_BUTTON_DURATION_HPP
+#ifndef TMP_BUTTON_TIMED_HPP
+#define TMP_BUTTON_TIMED_HPP
 
 // ----------------------------------------------------------------------------------------------------
 
-#include "button.hpp"
+#include "buttonChanged.hpp"
+
+#include <limits.h>
+#include <stdint.h>
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -12,7 +15,7 @@ namespace ButtonTimedProperties
 
 typedef uint8_t Duration_t; // in number of update() calls [must be unsigned, see update()]
 
-enum ButtonStateDuration
+enum class Duration
 {
     TooShort,
     Short,
@@ -23,50 +26,53 @@ enum ButtonStateDuration
 
 // ----------------------------------------------------------------------------------------------------
 
-template <typename AvrPin_,
-          AvrInputOutput::PinState PinDownState_,
-          bool PullupEnabled_,
+template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_>
-class ButtonTimed : public Button<AvrPin_, PinDownState_, PullupEnabled_>
+class ButtonTimed : public ButtonChanged<Button_>
 {
+    typedef ButtonChanged<Button_> BaseButton;
+
 public:
-    static ButtonTimedProperties::Duration_t  constexpr DurationShort = DurationShort_;
-    static ButtonTimedProperties::Duration_t  constexpr DurationLong = DurationLong_;
+//    static ButtonTimedProperties::Duration_t  constexpr DurationShort = DurationShort_;
+//    static ButtonTimedProperties::Duration_t  constexpr DurationLong = DurationLong_;
+
+    static_assert(0 < DurationShort_);
+    static_assert(DurationShort_ < DurationLong_);
 
     static void initialize()
     {
-        Button<AvrPin_, PinDownState_, PullupEnabled_>::initialize();
+        BaseButton::initialize();
         currentDuration_ = 0;
         previousDuration_ = 0;
     }
 
     static void update()
     {
-        Button<AvrPin_, PinDownState_, PullupEnabled_>::update();
+        BaseButton::update();
 
-        if (Button<AvrPin_, PinDownState_, PullupEnabled_>::getCurrentState_() !=
-                Button<AvrPin_, PinDownState_, PullupEnabled_>::getPreviousState_())
+        if (BaseButton::toggled())
         {
             previousDuration_ = currentDuration_;
-            currentDuration_ = 0;
+            currentDuration_ = 1;
         }
         else
         {
-            // only increase up to max of Duration_t, do not overflow!
-            if (currentDuration_ < static_cast<ButtonTimedProperties::Duration_t>(-1))
+            // Only increase up to max of Duration_t - do not overflow!
+            static_assert(UCHAR_MAX == static_cast<ButtonTimedProperties::Duration_t>(-1));
+            if (currentDuration_ < UCHAR_MAX)
             {
                 ++currentDuration_;
             }
         }
     }
 
-    static ButtonTimedProperties::ButtonStateDuration currentState()
+    static ButtonTimedProperties::Duration currentState()
     {
         return durationToState(currentDuration_);
     }
 
-    static ButtonTimedProperties::ButtonStateDuration previousState()
+    static ButtonTimedProperties::Duration previousState()
     {
         return durationToState(previousDuration_);
     }
@@ -75,99 +81,122 @@ public:
 
     static bool isDownShort()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isDown() &&
-                (ButtonTimedProperties::ButtonStateDuration::Short == currentState()));
+        return (BaseButton::isDown() &&
+                (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
     static bool isDownLong()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isDown() &&
-                (ButtonTimedProperties::ButtonStateDuration::Long == currentState()));
+        return (BaseButton::isDown() &&
+                (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
     static bool isUpShort()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isUp() &&
-                (ButtonTimedProperties::ButtonStateDuration::Short == currentState()));
+        return (BaseButton::isUp() &&
+                (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
     static bool isUpLong()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::isUp() &&
-                (ButtonTimedProperties::ButtonStateDuration::Long == currentState()));
+        return (BaseButton::isUp() &&
+                (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
     static bool pressedAfterShort()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::pressed() &&
-                (ButtonTimedProperties::ButtonStateDuration::Short == previousState()));
+        return (BaseButton::pressed() &&
+                (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
     static bool pressedAfterLong()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::pressed() &&
-                (ButtonTimedProperties::ButtonStateDuration::Long == previousState()));
+        return (BaseButton::pressed() &&
+                (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
     static bool releasedAfterShort()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::released() &&
-                (ButtonTimedProperties::ButtonStateDuration::Short == previousState()));
+        return (BaseButton::released() &&
+                (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
     static bool releasedAfterLong()
     {
-        return (Button<AvrPin_, PinDownState_, PullupEnabled_>::released() &&
-                (ButtonTimedProperties::ButtonStateDuration::Long == previousState()));
+        return (BaseButton::released() &&
+                (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-protected:
-    static ButtonTimedProperties::Duration_t getCurrentDuration_()
+    static bool wasDownShort()
     {
-        return currentDuration_;
+        return (!BaseButton::isDown() &&
+                (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    static ButtonTimedProperties::Duration_t getPreviousDuration_()
+    static bool wasDownLong()
     {
-        return previousDuration_;
+        return (!BaseButton::isDown() &&
+                (ButtonTimedProperties::Duration::Long == previousState()));
     }
+
+    static bool wasUpShort()
+    {
+        return (!BaseButton::isUp() &&
+                (ButtonTimedProperties::Duration::Short == previousState()));
+    }
+
+    static bool wasUpLong()
+    {
+        return (!BaseButton::isUp() &&
+                (ButtonTimedProperties::Duration::Long == previousState()));
+    }
+
+//protected:
+//    static ButtonTimedProperties::Duration_t getCurrentDuration_()
+//    {
+//        return currentDuration_;
+//    }
+
+//    static ButtonTimedProperties::Duration_t getPreviousDuration_()
+//    {
+//        return previousDuration_;
+//    }
 
 
 private:
     static ButtonTimedProperties::Duration_t currentDuration_;
     static ButtonTimedProperties::Duration_t previousDuration_;
 
-    static ButtonTimedProperties::ButtonStateDuration durationToState(ButtonTimedProperties::Duration_t const & duration)
+    static ButtonTimedProperties::Duration durationToState(ButtonTimedProperties::Duration_t const & duration)
     {
-        ButtonTimedProperties::ButtonStateDuration state = ButtonTimedProperties::ButtonStateDuration::TooShort;
+        ButtonTimedProperties::Duration state = ButtonTimedProperties::Duration::TooShort;
         if (duration >= DurationLong_)
         {
-            state = ButtonTimedProperties::ButtonStateDuration::Long;
+            state = ButtonTimedProperties::Duration::Long;
         }
         else if (duration >= DurationShort_)
         {
-            state = ButtonTimedProperties::ButtonStateDuration::Short;
+            state = ButtonTimedProperties::Duration::Short;
         }
         return state;
     }
+
+    ButtonTimed() = delete;
+
 };
 
 // ----------------------------------------------------------------------------------------------------
 
-template <typename AvrPin_,
-          AvrInputOutput::PinState PinDownState_,
-          bool PullupEnabled_,
+template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_>
-ButtonTimedProperties::Duration_t ButtonTimed<AvrPin_, PinDownState_, PullupEnabled_, DurationShort_, DurationLong_>::currentDuration_;
+ButtonTimedProperties::Duration_t ButtonTimed<Button_, DurationShort_, DurationLong_>::currentDuration_;
 
-template <typename AvrPin_,
-          AvrInputOutput::PinState PinDownState_,
-          bool PullupEnabled_,
+template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_>
-ButtonTimedProperties::Duration_t ButtonTimed<AvrPin_, PinDownState_, PullupEnabled_, DurationShort_, DurationLong_>::previousDuration_;
+ButtonTimedProperties::Duration_t ButtonTimed<Button_, DurationShort_, DurationLong_>::previousDuration_;
 
 // ----------------------------------------------------------------------------------------------------
 
-#endif // TMP_BUTTON_DURATION_HPP
+#endif // TMP_BUTTON_TIMED_HPP
