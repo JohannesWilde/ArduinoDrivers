@@ -5,6 +5,7 @@
 
 #include "simplePin.hpp"
 
+#include <stddef.h>
 #include <stdint.h>
 
 // ----------------------------------------------------------------------------------------------------
@@ -16,12 +17,14 @@
  * The bits are numbered from 0 to 7.
  */
 template <uint8_t Bit_,
-          uint8_t const & Byte_>
+          uint8_t const * Byte_,
+          size_t ByteOffset_ = 0>
 class SimplePinBitRead : public SimplePin
 {
 public:
 //    static uint8_t constexpr Bit = Bit_;
-//    static uint8_t * constexpr Byte_ = Byte_;
+//    static uint8_t * constexpr Byte = Byte_;
+//    static size_t constexpr ByteOffset = ByteOffset_;
     static_assert(Bit_ < 8);
 
     static void initialize()
@@ -36,7 +39,7 @@ public:
 
     static State get()
     {
-        return ((Byte_ & bitMask_) == (0b1 << Bit_)) ? State::One : State::Zero;
+        return ((value_() & bitMask_) == (0b1 << Bit_)) ? State::One : State::Zero;
     }
 
 protected:
@@ -44,6 +47,11 @@ protected:
     static uint8_t constexpr bitMask_ = (0b1 << Bit_);
 
 private:
+
+    static inline uint8_t const & value_()
+    {
+        return *(Byte_ + ByteOffset_);
+    }
 
     SimplePinBitRead() = delete;
 
@@ -58,11 +66,12 @@ private:
  * The bits are numbered from 0 to 7.
  */
 template <uint8_t Bit_,
-          uint8_t & Byte_>
-class SimplePinBit : public SimplePinBitRead<Bit_, const_cast<uint8_t const &>(Byte_)>
+         uint8_t * Byte_,
+         size_t ByteOffset_ = 0>
+class SimplePinBit : public SimplePinBitRead<Bit_, const_cast<uint8_t const *>(Byte_), ByteOffset_>
 {
 public:
-    typedef SimplePinBitRead<Bit_, const_cast<uint8_t const &>(Byte_)> Base;
+    typedef SimplePinBitRead<Bit_, const_cast<uint8_t const *>(Byte_), ByteOffset_> Base;
 
     static void set(SimplePin::State const state)
     {
@@ -70,12 +79,12 @@ public:
         {
         case Base::State::Zero:
         {
-            Byte_ &= ~Base::bitMask_;
+            value_() &= ~Base::bitMask_;
             break;
         }
         case SimplePin::State::One:
         {
-            Byte_ |= Base::bitMask_;
+            value_() |= Base::bitMask_;
             break;
         }
         }
@@ -83,10 +92,15 @@ public:
 
     static void toggle()
     {
-        Byte_ ^= Base::bitMask_;
+        value_() ^= Base::bitMask_;
     }
 
 private:
+
+    static inline uint8_t & value_()
+    {
+        return *(Byte_ + ByteOffset_);
+    }
 
     SimplePinBit() = delete;
 
