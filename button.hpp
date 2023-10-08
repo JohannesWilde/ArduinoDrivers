@@ -3,100 +3,61 @@
 
 // ----------------------------------------------------------------------------------------------------
 
+#include "simpleOnOff.hpp"
+#include "simplePin.hpp"
+
 #include <stdint.h>
-#include "avrpin.hpp"
 
 // ----------------------------------------------------------------------------------------------------
 
-template <typename AvrPin_,
-          AvrInputOutput::PinState PinDownState_,
-          bool PullupEnabled_>
-class Button
+/**
+ * @brief Button interpretes simplePin values for button behaviour.
+ */
+template <typename SimplePinRead_,
+         SimplePin::State DownState_>
+class Button : private SimpleOnOff<SimplePinRead_, DownState_>
 {
 public:
-    typedef AvrPin_ Pin;
-    static AvrInputOutput::PinState constexpr PinDownState = PinDownState_;
-    static bool constexpr PullupEnabled = PullupEnabled_;
+    typedef SimplePinRead_ Pin;
+//    static Pin::State constexpr DownState = DownState;
+    typedef SimpleOnOff<SimplePinRead_, DownState_> OnOff;
 
-    static void initialize()
+    enum class State
     {
-        AvrPin_::setType(AvrInputOutput::getInputType<PullupEnabled_>());
-        currentState_ = AvrPin_::readPin();
-        previousState_ = currentState_;
+        Up,
+        Down
+    };
+
+    using OnOff::initialize;
+    using OnOff::deinitialize;
+
+    static State get()
+    {
+        switch (OnOff::get())
+        {
+        case OnOff::State::On: return State::Down;
+        case OnOff::State::Off: return State::Up;
+        }
+
+        // Appease the compiler even though I don't see how above switch-case could not cover every possibility.
+        return State::Up;
     }
 
-    static void deinitialize()
-    {
-        AvrPin_::setType(AvrInputOutput::PinType::Input);
-    }
-
-    static void update()
-    {
-        previousState_ = currentState_;
-        currentState_ = AvrPin_::readPin();
-    }
-
-    /**
-     * @brief isDown - button is currently being pressed down.
-     */
     static bool isDown()
     {
-        return isDown_(currentState_);
+        return (State::Down == get());
     }
 
-    /**
-     * @brief isUp - button is currently not being pressed down.
-     */
     static bool isUp()
     {
-        return !isDown();
+        return (State::Up == get());
     }
-
-    /**
-     * @brief pressed - button was pressed.
-     */
-    static bool pressed()
-    {
-        return ((currentState_ != previousState_) && (PinDownState_ == currentState_));
-    }
-
-    /**
-     * @brief released - button was released.
-     */
-    static bool released()
-    {
-        return ((currentState_ != previousState_) && (PinDownState_ != currentState_));
-    }
-
-protected:
-    static AvrInputOutput::PinState getCurrentState_()
-    {
-        return currentState_;
-    }
-
-    static AvrInputOutput::PinState getPreviousState_()
-    {
-        return previousState_;
-    }
-
 
 private:
-    static AvrInputOutput::PinState currentState_;
-    static AvrInputOutput::PinState previousState_;
 
-    static bool isDown_(AvrInputOutput::PinState const pinState)
-    {
-        return (PinDownState_ == pinState);
-    }
+    Button() = delete;
+
 };
-
-// ----------------------------------------------------------------------------------------------------
-
-template <typename AvrPin_, AvrInputOutput::PinState PinDownState_, bool PullupEnabled_>
-AvrInputOutput::PinState Button<AvrPin_, PinDownState_, PullupEnabled_>::currentState_;
-
-template <typename AvrPin_, AvrInputOutput::PinState PinDownState_, bool PullupEnabled_>
-AvrInputOutput::PinState Button<AvrPin_, PinDownState_, PullupEnabled_>::previousState_;
 
 // ----------------------------------------------------------------------------------------------------
 
