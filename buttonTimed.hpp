@@ -31,7 +31,7 @@ template <typename Button_,
           ButtonTimedProperties::Duration_t DurationLong_>
 class ButtonTimed : public ButtonChanged<Button_>
 {
-    typedef ButtonChanged<Button_> ButtonChanged;
+    typedef ButtonChanged<Button_> BaseButton;
 
 public:
 //    static ButtonTimedProperties::Duration_t  constexpr DurationShort = DurationShort_;
@@ -42,16 +42,16 @@ public:
 
     static void initialize()
     {
-        ButtonChanged::initialize();
+        BaseButton::initialize();
         currentDuration_ = 0;
         previousDuration_ = 0;
     }
 
     static void update()
     {
-        ButtonChanged::update();
+        BaseButton::update();
 
-        if (ButtonChanged::toggled())
+        if (BaseButton::toggled())
         {
             previousDuration_ = currentDuration_;
             currentDuration_ = 1;
@@ -81,73 +81,73 @@ public:
 
     static bool isDownShort()
     {
-        return (ButtonChanged::isDown() &&
+        return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
     static bool isDownLong()
     {
-        return (ButtonChanged::isDown() &&
+        return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
     static bool isUpShort()
     {
-        return (ButtonChanged::isUp() &&
+        return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
     static bool isUpLong()
     {
-        return (ButtonChanged::isUp() &&
+        return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
     static bool pressedAfterShort()
     {
-        return (ButtonChanged::pressed() &&
+        return (BaseButton::pressed() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
     static bool pressedAfterLong()
     {
-        return (ButtonChanged::pressed() &&
+        return (BaseButton::pressed() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
     static bool releasedAfterShort()
     {
-        return (ButtonChanged::released() &&
+        return (BaseButton::released() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
     static bool releasedAfterLong()
     {
-        return (ButtonChanged::released() &&
+        return (BaseButton::released() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
     static bool wasDownShort()
     {
-        return (!ButtonChanged::isDown() &&
+        return (!BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
     static bool wasDownLong()
     {
-        return (!ButtonChanged::isDown() &&
+        return (!BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
     static bool wasUpShort()
     {
-        return (!ButtonChanged::isUp() &&
+        return (!BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
     static bool wasUpLong()
     {
-        return (!ButtonChanged::isUp() &&
+        return (!BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
