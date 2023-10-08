@@ -35,8 +35,8 @@ public:
     {
         switch (OnOff::get())
         {
-        case OnOff::State::On: return State::Down;
-        case OnOff::State::Off: return State::Up;
+        case SimpleOnOffProperties::State::On: return State::Down;
+        case SimpleOnOffProperties::State::Off: return State::Up;
         }
 
         // Appease the compiler even though I don't see how above switch-case could not cover every possibility.

@@ -9,6 +9,19 @@
 
 // ----------------------------------------------------------------------------------------------------
 
+namespace SimpleOnOffProperties
+{
+
+enum State
+{
+    On,
+    Off
+};
+
+} // namespace SimpleOnOffProperties
+
+// ----------------------------------------------------------------------------------------------------
+
 /**
  * @brief Button interpretes simplePin values for button behaviour - readonly.
  */
@@ -20,12 +33,6 @@ public:
     typedef SimplePinRead_ Pin;
     //    static Pin::State constexpr OnState = OnState_;
 
-    enum State
-    {
-        On,
-        Off
-    };
-
     static void initialize()
     {
         SimplePinRead_::initialize();
@@ -36,9 +43,9 @@ public:
         SimplePinRead_::deinitialize();
     }
 
-    static State get()
+    static SimpleOnOffProperties::State get()
     {
-        return (OnState_ == SimplePinRead_::get()) ? State::On : State::Off;
+        return (OnState_ == SimplePinRead_::get()) ? SimpleOnOffProperties::State::On : SimpleOnOffProperties::State::Off;
     }
 
 private:
@@ -61,9 +68,9 @@ public:
     //    static Pin::State constexpr OnState = OnState_;
     typedef SimpleOnOffRead<SimplePin_, OnState_> Base;
 
-    static void set(Base::State const state)
+    static void set(typename SimpleOnOffProperties::State const state)
     {
-        SimplePin_::set( (Base::State::On == state) ? OnState_ : SimplePin::other<OnState_>());
+        SimplePin_::set( (SimpleOnOffProperties::State::On == state) ? OnState_ : SimplePin::other<OnState_>());
     }
 
     static void toggle()
