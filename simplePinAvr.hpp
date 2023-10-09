@@ -51,6 +51,9 @@ protected:
         case AvrInputOutput::PinState::Low: return State::Zero;
         case AvrInputOutput::PinState::High: return State::One;
         }
+
+        // Appease the compiler even though I don't see how above switch-case could not cover every possibility.
+        return State::One;
     }
 
 private:
@@ -101,13 +104,16 @@ public:
 
 protected:
 
-    static constexpr AvrInputOutput::PinState convert_(Base::State const pinState)
+    static constexpr AvrInputOutput::PinState convert_(SimplePin::State const pinState)
     {
         switch (pinState)
         {
-        case Base::State::Zero: return AvrInputOutput::PinState::Low;
-        case Base::State::One: return AvrInputOutput::PinState::High;
+        case SimplePin::State::Zero: return AvrInputOutput::PinState::Low;
+        case SimplePin::State::One: return AvrInputOutput::PinState::High;
         }
+
+        // Appease the compiler even though I don't see how above switch-case could not cover every possibility.
+        return AvrInputOutput::PinState::High;
     }
 
 private:
