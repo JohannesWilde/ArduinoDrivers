@@ -1,6 +1,7 @@
 #ifndef AVR_PIN_SPECIALIZATIONS_HPP
 #define AVR_PIN_SPECIALIZATIONS_HPP
 
+#include "avrinputoutput.hpp"
 #include "avrpin.hpp"
 
 /** AvrPinSpecializations - Classes abstracting the internal interface for
@@ -17,11 +18,50 @@
  * initialized before using any of their member functions.
  */
 
+namespace // anonymous
+{
+
+template<class AvrPin, AvrInputOutput::PinState pinState>
+struct AvrPinOutputHelper
+{
+    static void initialize();
+    static void write();
+};
+
+template<class AvrPin>
+struct AvrPinOutputHelper<AvrPin, AvrInputOutput::PinState::High>
+{
+    static void initialize()
+    {
+        AvrPin::setType(AvrInputOutput::OutputHigh);
+    }
+    static void write()
+    {
+        AvrPin::setPort();
+    }
+};
+
+template<class AvrPin>
+struct AvrPinOutputHelper<AvrPin, AvrInputOutput::PinState::Low>
+{
+    static void initialize()
+    {
+        AvrPin::setType(AvrInputOutput::OutputLow);
+    }
+    static void write()
+    {
+        AvrPin::clearPort();
+    }
+};
+
+} // namespace anonymous
+
+
 
 template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinInput : protected AvrPin<AvrIoRegister, pinNumber_>
 {
-    static void initialize() = 0;
+    // static void initialize() = 0;
 
     static AvrInputOutput::PinState read()
     {
@@ -63,36 +103,16 @@ template<typename AvrIoRegister, unsigned pinNumber_>
 struct AvrPinOutput : private AvrPin<AvrIoRegister, pinNumber_>
 {
     template<AvrInputOutput::PinState pinState>
-    static void initialize();
-
-    template<>
-    static void initialize<AvrInputOutput::High>()
+    static void initialize()
     {
-        avrPin_::setType(AvrInputOutput::OutputHigh);
+        AvrPinOutputHelper<avrPin_, pinState>::initialize();
     }
-
-    template<>
-    static void initialize<AvrInputOutput::Low>()
-    {
-        avrPin_::setType(AvrInputOutput::OutputLow);
-    }
-
 
     template<AvrInputOutput::PinState pinState>
-    static void write();
-
-    template<>
-    static void write<AvrInputOutput::High>()
+    static void write()
     {
-        avrPin_::setPort();
+        AvrPinOutputHelper<avrPin_, pinState>::write();
     }
-
-    template<>
-    static void write<AvrInputOutput::Low>()
-    {
-        avrPin_::clearPort();
-    }
-
 
     static void toggle()
     {
