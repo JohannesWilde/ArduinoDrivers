@@ -33,14 +33,23 @@ public:
 
     static State get()
     {
+        State state = State::Up;
+
         switch (OnOff::get())
         {
-        case SimpleOnOffProperties::State::On: return State::Down;
-        case SimpleOnOffProperties::State::Off: return State::Up;
+        case SimpleOnOffProperties::State::On:
+        {
+            state = State::Down;
+            break;
+        }
+        case SimpleOnOffProperties::State::Off:
+        {
+            state = State::Up;
+            break;
+        }
         }
 
-        // Appease the compiler even though I don't see how above switch-case could not cover every possibility.
-        return State::Up;
+        return state;
     }
 
     static bool isDown()
