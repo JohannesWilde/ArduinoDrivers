@@ -26,6 +26,7 @@ public:
     static bool isDoubleDownShortFinished()
     {
         return (BaseButton::isUp() &&
+                (DurationCombineMax_ >= ButtonTimedMultiple::previousDuration_(0)) &&
                 (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(1)) &&
                 (DurationShort_ <= ButtonTimedMultiple::previousDuration_(2)) &&
                 (DurationCombineMax_ >= ButtonTimedMultiple::previousDuration_(2)) &&
