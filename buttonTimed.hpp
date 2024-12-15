@@ -50,6 +50,11 @@ public:
         currentDuration_ = history_;
     }
 
+    static void clearHistory()
+    {
+        memset(history_, 0, HistoryLength_);
+    }
+
     static void update()
     {
         BaseButton::update();
@@ -78,6 +83,11 @@ public:
     static ButtonTimedProperties::Duration previousState()
     {
         return durationToState_(*otherDuration_(currentDuration_, false, 1));
+    }
+
+    static ButtonTimedProperties::Duration previousState(size_t const offset)
+    {
+        return durationToState_(previousDuration_(offset));
     }
 
     // convenience access methods
@@ -156,6 +166,40 @@ public:
 
 protected:
 
+    static ButtonTimedProperties::Duration_t previousDuration_(size_t const offset)
+    {
+        ButtonTimedProperties::Duration_t duration = 0;
+        if (HistoryLength_ > offset)
+        {
+            duration = *otherDuration_(currentDuration_, false, offset);
+        }
+        else
+        {
+            // Keep 0 for offsets out of range.
+        }
+        return duration;
+    }
+
+    static ButtonTimedProperties::Duration durationToState_(ButtonTimedProperties::Duration_t const & duration)
+    {
+        ButtonTimedProperties::Duration state = ButtonTimedProperties::Duration::TooShort;
+        if (duration >= DurationLong_)
+        {
+            state = ButtonTimedProperties::Duration::Long;
+        }
+        else if (duration >= DurationShort_)
+        {
+            state = ButtonTimedProperties::Duration::Short;
+        }
+        return state;
+    }
+
+private:
+    static ButtonTimedProperties::Duration_t history_[HistoryLength_];
+    static ButtonTimedProperties::Duration_t * currentDuration_;
+
+    ButtonTimed() = delete;
+
     static ButtonTimedProperties::Duration_t * otherDuration_(
         ButtonTimedProperties::Duration_t * const currentDuration,
         bool const forward,
@@ -193,26 +237,6 @@ protected:
         }
         return otherDuration;
     }
-
-    static ButtonTimedProperties::Duration durationToState_(ButtonTimedProperties::Duration_t const & duration)
-    {
-        ButtonTimedProperties::Duration state = ButtonTimedProperties::Duration::TooShort;
-        if (duration >= DurationLong_)
-        {
-            state = ButtonTimedProperties::Duration::Long;
-        }
-        else if (duration >= DurationShort_)
-        {
-            state = ButtonTimedProperties::Duration::Short;
-        }
-        return state;
-    }
-
-private:
-    static ButtonTimedProperties::Duration_t history_[HistoryLength_];
-    static ButtonTimedProperties::Duration_t * currentDuration_;
-
-    ButtonTimed() = delete;
 
 };
 
