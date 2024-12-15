@@ -23,9 +23,9 @@ public:
 
     // convenience access methods
 
-    static bool isDownDoubleShortFinished()
+    static bool isDoubleDownShortFinished()
     {
-        return (BaseButton::isDown() &&
+        return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(1)) &&
                 (DurationShort_ <= ButtonTimedMultiple::previousDuration_(2)) &&
                 (DurationCombineMax_ >= ButtonTimedMultiple::previousDuration_(2)) &&
