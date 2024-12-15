@@ -11,7 +11,7 @@ template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_,
           ButtonTimedProperties::Duration_t DurationCombineMax_,
-          size_t HistoryLength_ = 5>
+          size_t HistoryLength_ = 4>
 class ButtonTimedMultiple : public ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_>
 {
     typedef ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_> BaseButton;
@@ -19,7 +19,7 @@ class ButtonTimedMultiple : public ButtonTimed<Button_, DurationShort_, Duration
 public:
 
     static_assert(DurationShort_ <= DurationCombineMax_);
-    static_assert(4 < HistoryLength_);
+    static_assert(4 <= HistoryLength_);
 
     // convenience access methods
 
@@ -27,10 +27,9 @@ public:
     {
         return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(1)) &&
-                (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(2)) &&
-                (DurationShort_ <= ButtonTimedMultiple::previousDuration_(3)) &&
-                (DurationCombineMax_ >= ButtonTimedMultiple::previousDuration_(3)) &&
-                (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(4)));
+                (DurationShort_ <= ButtonTimedMultiple::previousDuration_(2)) &&
+                (DurationCombineMax_ >= ButtonTimedMultiple::previousDuration_(2)) &&
+                (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(3)));
     }
 
 private:
