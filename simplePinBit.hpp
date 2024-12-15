@@ -79,12 +79,12 @@ public:
         {
         case Base::State::Zero:
         {
-            value_() &= ~Base::bitMask_;
+            value_() &= ~SimplePinBit::bitMask_;
             break;
         }
         case SimplePin::State::One:
         {
-            value_() |= Base::bitMask_;
+            value_() |= SimplePinBit::bitMask_;
             break;
         }
         }
@@ -92,7 +92,7 @@ public:
 
     static void toggle()
     {
-        value_() ^= Base::bitMask_;
+        value_() ^= SimplePinBit::bitMask_;
     }
 
 private:
