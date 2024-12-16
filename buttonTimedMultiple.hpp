@@ -27,7 +27,7 @@ public:
     {
         return (BaseButton::isUp() &&
                 // Current long enough not to potentially belong to the next one.
-                (DurationCombineMax_ < ButtonTimedMultiple::previousDuration_(0)) &&
+                ((DurationCombineMax_ + 1) == ButtonTimedMultiple::previousDuration_(0)) &&
                 // Second short button press.
                 (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(1)) &&
                 // Intermediate not tooShort, but short enough to fit DurationCombineMax_.
@@ -45,7 +45,7 @@ public:
     {
         return (BaseButton::isUp() &&
                 // Current long enough not to potentially belong to the next one.
-                (DurationCombineMax_ < ButtonTimedMultiple::previousDuration_(0)) &&
+                ((DurationCombineMax_ + 1) == ButtonTimedMultiple::previousDuration_(0)) &&
                 // First short button press.
                 (ButtonTimedProperties::Duration::Short == ButtonTimedMultiple::previousState(1)) &&
                 // Rule out more than single press.
