@@ -9,7 +9,8 @@
 
 /**
  * @brief The ButtonChanged class provides convenience methods with additional info about a ButtonCached.
- *
+ * It tracks the previous state and can thus provide information as to the change that
+ * occured between the second-to-last and last update() call.
  */
 template <typename Button_>
 class ButtonChanged : public ButtonCached<Button_>
