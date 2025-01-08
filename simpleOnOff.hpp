@@ -23,7 +23,7 @@ enum State
 // ----------------------------------------------------------------------------------------------------
 
 /**
- * @brief Button interpretes simplePin values for button behaviour - readonly.
+ * @brief SimpleOnOffRead interpretes simplePin values for on-/off-behaviour - readonly.
  */
 template <typename SimplePinRead_,
          SimplePin::State OnState_>
@@ -57,7 +57,7 @@ private:
 // ----------------------------------------------------------------------------------------------------
 
 /**
- * @brief Button interpretes simplePin values for button behaviour.
+ * @brief SimpleOnOff interpretes simplePin values for on-/off-behaviour.
  */
 template <typename SimplePin_,
          SimplePin::State OnState_>
