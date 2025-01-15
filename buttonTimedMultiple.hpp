@@ -1,5 +1,5 @@
-#ifndef TMP_BUTTON_TIMED_MULTIPLE_HPP
-#define TMP_BUTTON_TIMED_MULTIPLE_HPP
+#ifndef DYNAMIC_BUTTON_TIMED_MULTIPLE_HPP
+#define DYNAMIC_BUTTON_TIMED_MULTIPLE_HPP
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -7,26 +7,30 @@
 
 // ----------------------------------------------------------------------------------------------------
 
-namespace TMP
-{
-
 template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_,
           ButtonTimedProperties::Duration_t DurationCombineMax_,
-          size_t HistoryLength_ = 5>
-class ButtonTimedMultiple : public ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_>
+          size_t HistoryLength_ = 5,
+          typename... Args>
+class ButtonTimedMultiple : public ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_, Args...>
 {
-    typedef ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_> BaseButton;
+    typedef ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_, Args...> BaseButton;
 
 public:
 
     static_assert(DurationShort_ <= DurationCombineMax_);
     static_assert(5 <= HistoryLength_);
 
+    ButtonTimedMultiple(Args... args)
+        : BaseButton(args...)
+    {
+        // intentionally empty
+    }
+
     // convenience access methods
 
-    static bool isDoubleDownShortFinished()
+    bool isDoubleDownShortFinished()
     {
         return (BaseButton::isUp() &&
                 // Current long enough not to potentially belong to the next one.
@@ -44,7 +48,7 @@ public:
                );
     }
 
-    static bool isSingleDownShortFinished()
+    bool isSingleDownShortFinished()
     {
         return (BaseButton::isUp() &&
                 // Current long enough not to potentially belong to the next one.
@@ -59,12 +63,8 @@ public:
 
 private:
 
-    ButtonTimedMultiple() = delete;
-
 };
-
-} // namespace TMP
 
 // ----------------------------------------------------------------------------------------------------
 
-#endif // TMP_BUTTON_TIMED_MULTIPLE_HPP
+#endif // DYNAMIC_BUTTON_TIMED_MULTIPLE_HPP

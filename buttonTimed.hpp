@@ -1,5 +1,5 @@
-#ifndef TMP_BUTTON_TIMED_HPP
-#define TMP_BUTTON_TIMED_HPP
+#ifndef DYNAMIC_BUTTON_TIMED_HPP
+#define DYNAMIC_BUTTON_TIMED_HPP
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -10,9 +10,6 @@
 #include <string.h>
 
 // ----------------------------------------------------------------------------------------------------
-
-namespace TMP
-{
 
 namespace ButtonTimedProperties
 {
@@ -39,32 +36,30 @@ enum class Duration
 template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_,
-          size_t HistoryLength_ = 2>
-class ButtonTimed : public ButtonChanged<Button_>
+          size_t HistoryLength_ = 2,
+          typename... Args>
+class ButtonTimed : public ButtonChanged<Button_, Args...>
 {
-    typedef ButtonChanged<Button_> BaseButton;
+    typedef ButtonChanged<Button_, Args...> BaseButton;
 
 public:
-//    static ButtonTimedProperties::Duration_t  constexpr DurationShort = DurationShort_;
-//    static ButtonTimedProperties::Duration_t  constexpr DurationLong = DurationLong_;
-
     static_assert(0 < DurationShort_);
     static_assert(DurationShort_ < DurationLong_);
     static_assert(2 <= HistoryLength_);
 
-    static void initialize()
+    ButtonTimed(Args... args)
+        : BaseButton(args...)
+        , currentDuration_(history_)
     {
-        BaseButton::initialize();
-        memset(history_, 0, HistoryLength_);
-        currentDuration_ = history_;
+        clearHistory();
     }
 
-    static void clearHistory()
+    void clearHistory()
     {
         memset(history_, 0, HistoryLength_);
     }
 
-    static void update()
+    void update()
     {
         BaseButton::update();
 
@@ -84,90 +79,90 @@ public:
         }
     }
 
-    static ButtonTimedProperties::Duration currentState()
+    ButtonTimedProperties::Duration currentState() const
     {
         return durationToState_(*currentDuration_);
     }
 
-    static ButtonTimedProperties::Duration previousState()
+    ButtonTimedProperties::Duration previousState() const
     {
         return durationToState_(*otherDuration_(currentDuration_, false, 1));
     }
 
-    static ButtonTimedProperties::Duration previousState(size_t const offset)
+    ButtonTimedProperties::Duration previousState(size_t const offset) const
     {
         return durationToState_(previousDuration_(offset));
     }
 
     // convenience access methods
 
-    static bool isDownShort()
+    bool isDownShort()
     {
         return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
-    static bool isDownLong()
+    bool isDownLong()
     {
         return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
-    static bool isUpShort()
+    bool isUpShort()
     {
         return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
-    static bool isUpLong()
+    bool isUpLong()
     {
         return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
-    static bool pressedAfterShort()
+    bool pressedAfterShort()
     {
         return (BaseButton::pressed() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    static bool pressedAfterLong()
+    bool pressedAfterLong()
     {
         return (BaseButton::pressed() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-    static bool releasedAfterShort()
+    bool releasedAfterShort()
     {
         return (BaseButton::released() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    static bool releasedAfterLong()
+    bool releasedAfterLong()
     {
         return (BaseButton::released() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-    static bool wasDownShort()
+    bool wasDownShort()
     {
         return (!BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    static bool wasDownLong()
+    bool wasDownLong()
     {
         return (!BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-    static bool wasUpShort()
+    bool wasUpShort()
     {
         return (!BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    static bool wasUpLong()
+    bool wasUpLong()
     {
         return (!BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
@@ -175,7 +170,7 @@ public:
 
 protected:
 
-    static ButtonTimedProperties::Duration_t previousDuration_(size_t const offset)
+    ButtonTimedProperties::Duration_t previousDuration_(size_t const offset) const
     {
         ButtonTimedProperties::Duration_t duration = 0;
         if (HistoryLength_ > offset)
@@ -204,15 +199,13 @@ protected:
     }
 
 private:
-    static ButtonTimedProperties::Duration_t history_[HistoryLength_];
-    static ButtonTimedProperties::Duration_t * currentDuration_;
+    ButtonTimedProperties::Duration_t history_[HistoryLength_];
+    ButtonTimedProperties::Duration_t * currentDuration_;
 
-    ButtonTimed() = delete;
-
-    static ButtonTimedProperties::Duration_t * otherDuration_(
+    ButtonTimedProperties::Duration_t * otherDuration_(
         ButtonTimedProperties::Duration_t * const currentDuration,
         bool const forward,
-        size_t const offset)
+        size_t const offset) const
     {
         // assert(currentDuration >= history_);
         // assert(currentDuration < (history_ + HistoryLength_));
@@ -251,20 +244,4 @@ private:
 
 // ----------------------------------------------------------------------------------------------------
 
-template <typename Button_,
-          ButtonTimedProperties::Duration_t DurationShort_,
-          ButtonTimedProperties::Duration_t DurationLong_,
-          size_t HistoryLength_>
-ButtonTimedProperties::Duration_t ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_>::history_[HistoryLength_];
-
-template <typename Button_,
-          ButtonTimedProperties::Duration_t DurationShort_,
-          ButtonTimedProperties::Duration_t DurationLong_,
-          size_t HistoryLength_>
-ButtonTimedProperties::Duration_t * ButtonTimed<Button_, DurationShort_, DurationLong_, HistoryLength_>::currentDuration_;
-
-// ----------------------------------------------------------------------------------------------------
-
-} // namespace TMP
-
-#endif // TMP_BUTTON_TIMED_HPP
+#endif // DYNAMIC_BUTTON_TIMED_HPP

@@ -3,6 +3,9 @@
 
 // ----------------------------------------------------------------------------------------------------
 
+namespace TMP
+{
+
 /**
  * @brief The ButtonCache class monitors an actual button and provides state-change information.
  * Button will have to provide the following member function:   bool isDown()  .
@@ -58,5 +61,7 @@ template <typename Button>
 bool ButtonCached<Button>::isDown_;
 
 // ----------------------------------------------------------------------------------------------------
+
+} // namespace TMP
 
 #endif // TMP_BUTTON_CACHED_HPP
