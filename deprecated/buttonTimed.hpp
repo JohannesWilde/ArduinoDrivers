@@ -4,29 +4,15 @@
 // ----------------------------------------------------------------------------------------------------
 
 #include "buttonChanged.hpp"
+#include "../buttonTimedProperties.hpp"
 
 #include <limits.h>
-#include <stdint.h>
 #include <string.h>
 
 // ----------------------------------------------------------------------------------------------------
 
 namespace TMP
 {
-
-namespace ButtonTimedProperties
-{
-
-typedef uint8_t Duration_t; // in number of update() calls [must be unsigned, see update()]
-
-enum class Duration
-{
-    TooShort,
-    Short,
-    Long
-};
-
-} // namespace ButtonTimedProperties
 
 // ----------------------------------------------------------------------------------------------------
 
