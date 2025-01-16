@@ -27,6 +27,12 @@ enum class Duration
 
 // ----------------------------------------------------------------------------------------------------
 
+/**
+ * @brief The ButtonTimed class tracks the durations of HistoryLength_ previous states.
+ * Intrinsically it has support for determining whether the last press was tooShort,
+ * short or long.
+ * For more info see ButtonTimedMultiple.
+ */
 template <typename Button_,
           ButtonTimedProperties::Duration_t DurationShort_,
           ButtonTimedProperties::Duration_t DurationLong_,

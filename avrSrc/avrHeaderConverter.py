@@ -21,11 +21,13 @@ Please note, that in order for that to work, this submodule will have to be adde
 Alternatively one can replace the original files [e.g. in 
     Linux: /usr/share/arduino/hardware/tools/avr/lib/avr/include/avr
     Windows: c:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr
+    
+    C:\Users\xxx\AppData\Local\Arduino15\packages\arduino\tools\avr-gcc\7.3.0-atmel3.6.1-arduino7\avr\include\avr
 ].
 """
 
 if __name__ == "__main__":
-    filepaths = ["./iom328p.h", "iomxx0_1.h"]
+    filepaths = ["iom328p.h", "iomxx0_1.h", "iotnx4.h", ]
 
     conversionMacros = ["_SFR_MEM", "_SFR_IO"]
     # * - 0 to n repetitions
