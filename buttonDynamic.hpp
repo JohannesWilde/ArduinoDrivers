@@ -3,23 +3,46 @@
 
 // ----------------------------------------------------------------------------------------------------
 
-template<typename T,
-         void (*initButtonFunction)(T const index),
-         bool (*getButtonIsDown)(T const index),
-         void (*deinitButtonFunction)(T const index)>
+/** ButtonDynamic uses it's own address as an "index".
+  *
+  * This saves at least 1 byte per instance in RAM, requires however additional flash and runtime. As
+  * for microcontrollers RAM is the most constrained entity, this design was chosen.
+  *
+  * It's usage is designed similar to the following:
+  *
+  * ButtonDynamic<...> buttons[3] = {
+  *     {},
+  *     {},
+  *     {},
+  * };
+  *
+  * void buttonInitialize(void const * const instance)
+  * {
+  *     switch (static_cast<ButtonDynamic<...> const *>(instance) - buttons)
+  *     {
+  *     case 0: return Button0::initialize();
+  *     case 1: return Button1::initialize();
+  *     case 2: return Button2::initialize();
+  *     }
+  *     // assert(numberOfButtons > index);
+  * }
+  *
+  **/
+template<void (*initButtonFunction)(void const * const instance),
+         bool (*getButtonIsDown)(void const * const instance),
+         void (*deinitButtonFunction)(void const * const instance)>
 class ButtonDynamic
 {
 public:
 
-    constexpr ButtonDynamic(T const index)
-        : index_(index)
+    constexpr ButtonDynamic()
     {
-        initButtonFunction(index_);
+        initButtonFunction(this);
     }
 
     ~ButtonDynamic()
     {
-        deinitButtonFunction(index_);
+        deinitButtonFunction(this);
     }
 
     /**
@@ -27,7 +50,7 @@ public:
      */
     bool isDown() const
     {
-        return getButtonIsDown(index_);
+        return getButtonIsDown(this);
     }
 
     /**
@@ -38,8 +61,6 @@ public:
         return !isDown();
     }
 
-private:
-    T const index_;
 };
 
 // ----------------------------------------------------------------------------------------------------
