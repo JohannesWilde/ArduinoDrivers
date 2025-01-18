@@ -1,62 +1,58 @@
-#ifndef TMP_BUTTON_CACHED_HPP
-#define TMP_BUTTON_CACHED_HPP
+#ifndef DYNAMIC_BUTTON_CACHED_HPP
+#define DYNAMIC_BUTTON_CACHED_HPP
 
 // ----------------------------------------------------------------------------------------------------
 
+
 /**
  * @brief The ButtonCache class monitors an actual button and provides state-change information.
- * Button will have to provide the following member function:   bool isDown()  .
- *
+ * Button will have to provide the following member function:
+ *  - bool isDown(),
+ *  - initialization [if any] in Button(args...),
+ *  - deinitialization [if any] in ~Button().
  */
-template <typename Button>
+template <typename Button, typename... Args>
 class ButtonCached : public Button
 {
 public:
-    // Button will have to be initialized externally for now!
-    static void initialize()
+
+    ButtonCached(Args... args)
+        : Button(args...)
+        , isDown_(Button::isDown())
     {
-        Button::initialize();
-        update();
     }
 
-    static void deinitialize()
-    {
-        Button::deinitialize();
-    }
-
-    // if this is not called often enough, this will miss intermediate states
-    static void update()
+    /**
+     * @brief Updates the internal cache value with the current state of Button.
+     * If this is not called often enough, intermediate states will be lost.
+     */
+    void update()
     {
         isDown_ = Button::isDown();
     }
 
     /**
-     * @brief isDown - button is currently being pressed down.
+     * @brief isDown - button was pressed down during last update().
      */
-    static bool isDown()
+    bool isDown() const
     {
         return isDown_;
     }
 
     /**
-     * @brief isUp - button is currently not being pressed down.
+     * @brief isDown - button was not pressed down during last update().
      */
-    static bool isUp()
+    bool isUp() const
     {
         return !isDown();
     }
 
 private:
-    static bool isDown_;
 
-    ButtonCached() = delete;
+    bool isDown_;
+
 };
 
 // ----------------------------------------------------------------------------------------------------
 
-template <typename Button>
-bool ButtonCached<Button>::isDown_;
-
-// ----------------------------------------------------------------------------------------------------
-
-#endif // TMP_BUTTON_CACHED_HPP
+#endif // DYNAMIC_BUTTON_CACHED_HPP

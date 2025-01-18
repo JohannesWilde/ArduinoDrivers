@@ -8,6 +8,12 @@
 
 // ----------------------------------------------------------------------------------------------------
 
+enum class ButtonState
+{
+    Up,
+    Down
+};
+
 /**
  * @brief Button interpretes simplePin values for button behaviour.
  */
@@ -20,29 +26,23 @@ public:
 //    static Pin::State constexpr DownState = DownState;
     typedef SimpleOnOff<SimplePinRead_, DownState_> OnOff;
 
-    enum class State
-    {
-        Up,
-        Down
-    };
-
     using OnOff::initialize;
     using OnOff::deinitialize;
 
-    static State get()
+    static ButtonState get()
     {
-        State state = State::Up;
+        ButtonState state = ButtonState::Up;
 
         switch (OnOff::get())
         {
         case SimpleOnOffProperties::State::On:
         {
-            state = State::Down;
+            state = ButtonState::Down;
             break;
         }
         case SimpleOnOffProperties::State::Off:
         {
-            state = State::Up;
+            state = ButtonState::Up;
             break;
         }
         }
@@ -52,12 +52,12 @@ public:
 
     static bool isDown()
     {
-        return (State::Down == get());
+        return (ButtonState::Down == get());
     }
 
     static bool isUp()
     {
-        return (State::Up == get());
+        return (ButtonState::Up == get());
     }
 
 private:
