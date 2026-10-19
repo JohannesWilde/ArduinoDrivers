@@ -21,9 +21,10 @@ Please note, that in order for that to work, this submodule will have to be adde
 Alternatively one can replace the original files [e.g. in 
     Linux: /usr/share/arduino/hardware/tools/avr/lib/avr/include/avr
     Windows: c:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr
-    
-    C:\Users\xxx\AppData\Local\Arduino15\packages\arduino\tools\avr-gcc\7.3.0-atmel3.6.1-arduino7\avr\include\avr
-    c:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\
+             or
+             C:\Users\xxx\AppData\Local\Arduino15\packages\arduino\tools\avr-gcc\7.3.0-atmel3.6.1-arduino7\avr\include\avr
+             or
+             c:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\
 ].
 """
 
