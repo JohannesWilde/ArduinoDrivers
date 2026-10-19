@@ -28,7 +28,7 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE. */
 
-/* $Id: iotnx4.h 2225 2011-03-02 16:27:26Z arcanum $ */
+/* $Id$ */
 
 /* avr/iotnx4.h - definitions for ATtiny24, ATtiny44 and ATtiny84 */
 
