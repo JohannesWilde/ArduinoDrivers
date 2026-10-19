@@ -1,7 +1,7 @@
 import re
 from os import path
 
-"""
+r"""
 Additional to convenient register access via preprocessor defines,
     "#define DDRB    _SFR_IO8(0x04)"
 provide the following separate information [additionally to the original content]:
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     # \d - decimal digit
     # \(, \) - escaped braces
     # \\ - escaped backslash for Python's format
-    regularExpressions = [re.compile("#\s*define\s*(.*?)\s*({conversionMacro})(\d+)\\((0(x|X)[0-9A-Fa-f]+)\\)".format(**{"conversionMacro": macro}))
+    regularExpressions = [re.compile("#\\s*define\\s*(.*?)\\s*({conversionMacro})(\\d+)\\((0(x|X)[0-9A-Fa-f]+)\\)".format(**{"conversionMacro": macro}))
                                                                                         for macro in conversionMacros]
 
     for filepath in filepaths:
