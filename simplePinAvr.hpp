@@ -19,7 +19,8 @@ namespace Internal
  * class and still be able to use this as a base class for SimplePinAvr.
  */
 template <typename AvrPin_,
-         AvrInputOutput::PinType PinType_>
+          AvrInputOutput::PinType PinType_,
+          AvrInputOutput::PinType DeinitPinType_ = AvrInputOutput::PinType::Input>
 class SimplePinAvrRead_ : public SimplePin
 {
 public:
@@ -33,8 +34,7 @@ public:
 
     static void deinitialize()
     {
-        // intentionally empty
-        AvrPin_::setType(AvrInputOutput::PinType::Input);
+        AvrPin_::setType(DeinitPinType_);
     }
 
     static State get()
