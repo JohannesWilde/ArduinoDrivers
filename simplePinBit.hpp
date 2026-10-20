@@ -66,12 +66,24 @@ private:
  * The bits are numbered from 0 to 7.
  */
 template <uint8_t Bit_,
-         uint8_t * Byte_,
-         size_t ByteOffset_ = 0>
+          uint8_t * Byte_,
+          size_t ByteOffset_ = 0,
+          SimplePin::State StateInit = SimplePin::State::Zero,
+          SimplePin::State StateDeinit = SimplePin::State::Zero>
 class SimplePinBit : public SimplePinBitRead<Bit_, const_cast<uint8_t const *>(Byte_), ByteOffset_>
 {
 public:
     typedef SimplePinBitRead<Bit_, const_cast<uint8_t const *>(Byte_), ByteOffset_> Base;
+
+    static void initialize()
+    {
+        set(StateInit);
+    }
+
+    static void deinitialize()
+    {
+        set(StateDeinit);
+    }
 
     static void set(SimplePin::State const state)
     {
