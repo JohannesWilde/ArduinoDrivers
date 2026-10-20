@@ -3,6 +3,10 @@
 
 // ----------------------------------------------------------------------------------------------------
 
+typedef void (*InitButtonFunction_t)(void const * const instance);
+typedef bool (*GetButtonIsDown_t)(void const * const instance);
+typedef void (*DeinitButtonFunction_t)(void const * const instance);
+
 /**
  * ButtonDynamic provides a way to access Button TMP-classes via run-time [i.e. dynamic] instances.
  *
@@ -31,9 +35,9 @@
  * }
  *
  **/
-template<void (*initButtonFunction)(void const * const instance),
-         bool (*getButtonIsDown)(void const * const instance),
-         void (*deinitButtonFunction)(void const * const instance)>
+template<typename InitButtonFunction_t initButtonFunction,
+         typename GetButtonIsDown_t getButtonIsDown,
+         typename DeinitButtonFunction_t deinitButtonFunction>
 class ButtonDynamic
 {
 public:
