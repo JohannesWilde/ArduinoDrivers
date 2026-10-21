@@ -1,8 +1,8 @@
 I required at least C++ 14 for constexpr functions consisting not just of a return statement.
 
-The current Arduino IDE 2.3.2 ships with an avr-g++ of version 7.3, which should support C++ 17 [see [https://gcc.gnu.org/projects/cxx-status.html#cxx17](https://gcc.gnu.org/projects/cxx-status.html#cxx17)].
+The current Arduino IDE 2.3.10 ships with an avr-g++ of version 7.3.0, which should support C++ 17 [see [https://gcc.gnu.org/projects/cxx-status.html#cxx17](https://gcc.gnu.org/projects/cxx-status.html#cxx17)].
 
-I the following line in the following file:
+In the following line in the following file:
 
 c:\Users\User\AppData\Local\Arduino15\packages\arduino\hardware\avr\1.8.8\platform.txt
 
