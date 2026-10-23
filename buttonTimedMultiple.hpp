@@ -30,7 +30,7 @@ public:
 
     // convenience access methods
 
-    bool isDoubleDownShortFinished()
+    bool isDoubleDownShortFinished() const
     {
         return (BaseButton::isUp() &&
                 // Current long enough not to potentially belong to the next one.
@@ -48,7 +48,7 @@ public:
                );
     }
 
-    bool isSingleDownShortFinished()
+    bool isSingleDownShortFinished() const
     {
         return (BaseButton::isUp() &&
                 // Current long enough not to potentially belong to the next one.
