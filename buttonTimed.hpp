@@ -81,73 +81,73 @@ public:
 
     // convenience access methods
 
-    bool isDownShort()
+    bool isDownShort() const
     {
         return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
-    bool isDownLong()
+    bool isDownLong() const
     {
         return (BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
-    bool isUpShort()
+    bool isUpShort() const
     {
         return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == currentState()));
     }
 
-    bool isUpLong()
+    bool isUpLong() const
     {
         return (BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Long == currentState()));
     }
 
-    bool pressedAfterShort()
+    bool pressedAfterShort() const
     {
         return (BaseButton::pressed() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    bool pressedAfterLong()
+    bool pressedAfterLong() const
     {
         return (BaseButton::pressed() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-    bool releasedAfterShort()
+    bool releasedAfterShort() const
     {
         return (BaseButton::released() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    bool releasedAfterLong()
+    bool releasedAfterLong() const
     {
         return (BaseButton::released() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-    bool wasDownShort()
+    bool wasDownShort() const
     {
         return (!BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    bool wasDownLong()
+    bool wasDownLong() const
     {
         return (!BaseButton::isDown() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
     }
 
-    bool wasUpShort()
+    bool wasUpShort() const
     {
         return (!BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Short == previousState()));
     }
 
-    bool wasUpLong()
+    bool wasUpLong() const
     {
         return (!BaseButton::isUp() &&
                 (ButtonTimedProperties::Duration::Long == previousState()));
